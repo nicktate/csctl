@@ -53,7 +53,7 @@ func TestNewClient(t *testing.T) {
 		BaseURL: containershipURL,
 		Token:   "",
 	})
-	assert.NotNil(t, err)
+	assert.Nil(t, err)
 }
 
 func TestGet(t *testing.T) {

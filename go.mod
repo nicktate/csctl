@@ -29,6 +29,7 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a // indirect
 	golang.org/x/sys v0.0.0-20190403152447-81d4e9dc473e // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
+	gopkg.in/AlecAivazis/survey.v1 v1.8.5
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/resty.v1 v1.12.0
 	k8s.io/apimachinery v0.0.0-20181015213631-60666be32c5d // indirect
