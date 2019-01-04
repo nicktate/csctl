@@ -39,10 +39,6 @@ func NewClient(cfg Config) (*Client, error) {
 		return nil, errors.Wrapf(err, "parsing base URL %q", cfg.BaseURL)
 	}
 
-	if cfg.Token == "" {
-		return nil, errors.New("token is required")
-	}
-
 	return &Client{
 		baseURL:      baseURL,
 		token:        cfg.Token,
@@ -79,9 +75,12 @@ func (c *Client) execute(verb string, path string, body interface{}, output inte
 		return errors.Wrapf(err, "parsing path %q", path)
 	}
 
-	authHeader := fmt.Sprintf("JWT %s", c.token)
+	req := resty.SetDebug(c.debugEnabled).R()
 
-	req := resty.SetDebug(c.debugEnabled).R().SetHeader("Authorization", authHeader)
+	if c.token != "" {
+		authHeader := fmt.Sprintf("JWT %s", c.token)
+		req.SetHeader("Authorization", authHeader)
+	}
 
 	if body != nil {
 		req.SetBody(body)

@@ -150,14 +150,37 @@ func requireClientset(cmd *cobra.Command) {
 	cmd.PersistentFlags().StringVar(&userToken, "token", "", "Containership Cloud token to use")
 }
 
+func rootPreRunE(requireToken bool) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
+		userToken = viper.GetString("token")
+		if requireToken && userToken == "" {
+			return errors.New("please specify a token in your config file")
+		}
+
+		var err error
+		clientset, err = cloud.New(cloud.Config{
+			Token:            userToken,
+			APIBaseURL:       viper.GetString("apiBaseURL"),
+			AuthBaseURL:      viper.GetString("authBaseURL"),
+			ProvisionBaseURL: viper.GetString("provisionBaseURL"),
+			DebugEnabled:     debugEnabled,
+		})
+
+		return err
+	}
+}
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use: "csctl",
+	Use:   "csctl",
+	Short: "Command line client for interacting with Containership",
 	Long: `csctl is a command line interface for Containership.
 
 Find more information at: https://github.com/containership/csctl`,
 
 	SilenceUsage: true,
+
+	PersistentPreRunE: rootPreRunE(true),
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
