@@ -63,8 +63,8 @@ func (o *ClusterCreate) DefaultAndValidate() error {
 	}
 
 	o.labels = map[string]string{
-		"containership.io/cluster-name":        o.Name,
-		"containership.io/cluster-environment": o.Environment,
+		"cluster.containership.io/name":        o.Name,
+		"cluster.containership.io/environment": o.Environment,
 	}
 
 	return nil
