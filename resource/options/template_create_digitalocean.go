@@ -102,7 +102,7 @@ func (o *DigitalOceanTemplateCreate) defaultAndValidateRegion() error {
 
 func (o *DigitalOceanTemplateCreate) defaultAndValidateInstanceSize() error {
 	if o.InstanceSize == "" {
-		o.InstanceSize = "s-1vcpu-2gb"
+		o.InstanceSize = "s-2vcpu-2gb"
 	}
 
 	return nil
