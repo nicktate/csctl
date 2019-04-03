@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/go-resty/resty"
 	"github.com/pkg/errors"
+	resty "gopkg.in/resty.v1"
 )
 
 // Interface is the set of REST actions available

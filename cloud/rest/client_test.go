@@ -6,10 +6,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-resty/resty"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/containership/csctl/cloud/api/types"
+
+	resty "gopkg.in/resty.v1"
 )
 
 const (
