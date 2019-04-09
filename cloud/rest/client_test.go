@@ -7,10 +7,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	resty "gopkg.in/resty.v1"
 
 	"github.com/containership/csctl/cloud/api/types"
-
-	resty "gopkg.in/resty.v1"
 )
 
 const (
