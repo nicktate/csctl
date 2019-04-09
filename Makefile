@@ -15,12 +15,16 @@ LDFLAGS := "-X ${PKG}/pkg/buildinfo.gitDescribe=${GIT_DESCRIBE} \
 	-X ${PKG}/pkg/buildinfo.gitCommit=${GIT_COMMIT} \
 	-X ${PKG}/pkg/buildinfo.unixTime=${DATESTAMP}"
 
+# Ensure go module support is enabled, i.e.
+# This is required in case this repo lives in the $GOPATH/src tree.
+export GO111MODULE=on
+
 .PHONY: all
-all: dep ## (default) Build the binary
+all: ## (default) Build the binary
 	@go build -ldflags ${LDFLAGS}
 
 .PHONY: install
-install: dep ## Install the binary
+install: ## Install the binary
 	@go install -ldflags ${LDFLAGS}
 
 .PHONY: docker
@@ -28,10 +32,6 @@ docker: ## Build the Docker image
 	@docker image build -t ${IMAGE_NAME}:${IMAGE_TAG} . \
 		--build-arg GIT_DESCRIBE=${GIT_DESCRIBE} \
 		--build-arg GIT_COMMIT=${GIT_COMMIT} \
-
-.PHONY: dep
-dep: # Resolve / install dependencies
-	@dep ensure
 
 .PHONY: fmt-check
 fmt-check: ## Check the file format
