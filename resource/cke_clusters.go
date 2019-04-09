@@ -19,9 +19,8 @@ type CKEClusters struct {
 func NewCKEClusters(items []types.CKECluster) *CKEClusters {
 	return &CKEClusters{
 		resource: resource{
-			name:     "cluster",
-			plural:   "clusters",
-			listView: true,
+			name:   "cluster",
+			plural: "clusters",
 		},
 		items: items,
 	}
@@ -64,12 +63,12 @@ func (c *CKEClusters) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (c *CKEClusters) JSON(w io.Writer) error {
-	return displayJSON(w, c.items, c.resource.listView)
+	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (c *CKEClusters) YAML(w io.Writer) error {
-	return displayYAML(w, c.items, c.resource.listView)
+	return displayYAML(w, c.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

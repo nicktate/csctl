@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/containership/csctl/cloud/provision/types"
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
 	"k8s.io/client-go/util/jsonpath"
@@ -22,18 +21,8 @@ type Displayable interface {
 	JSONPath(w io.Writer, template string) error
 }
 
-func assertTypes(data interface{}, listView bool) interface{} {
-	switch val := data.(type) {
-	case []types.Template:
-		if len(val) == 1 && !listView {
-			return val[1:]
-		}
-	}
-	return data
-}
-
-func displayJSON(w io.Writer, data interface{}, listView bool) error {
-	j, err := json.MarshalIndent(assertTypes(data, listView), "", "  ")
+func displayJSON(w io.Writer, data interface{}) error {
+	j, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		return errors.Wrap(err, "marshaling to JSON")
 	}
@@ -43,8 +32,8 @@ func displayJSON(w io.Writer, data interface{}, listView bool) error {
 	return nil
 }
 
-func displayYAML(w io.Writer, data interface{}, listView bool) error {
-	j, err := json.Marshal(assertTypes(data, listView))
+func displayYAML(w io.Writer, data interface{}) error {
+	j, err := json.Marshal(data)
 	if err != nil {
 		return errors.Wrap(err, "marshaling to JSON")
 	}

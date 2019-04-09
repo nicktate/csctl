@@ -33,11 +33,6 @@ var getNodePoolCmd = &cobra.Command{
 		}
 
 		nps := resource.NewNodePools(resp)
-
-		if len(args) == 1 {
-			resource.NodePool().DisableListView()
-		}
-
 		outputResponse(nps)
 
 		return nil

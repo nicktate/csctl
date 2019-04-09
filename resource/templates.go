@@ -27,10 +27,9 @@ type filterFunc func(types.Template) bool
 func NewTemplates(items []types.Template) *Templates {
 	return &Templates{
 		resource: resource{
-			name:     "template",
-			plural:   "templates",
-			aliases:  []string{"tmpl", "tmpls"},
-			listView: true,
+			name:    "template",
+			plural:  "templates",
+			aliases: []string{"tmpl", "tmpls"},
 		},
 		items: items,
 	}
@@ -85,12 +84,12 @@ func (c *Templates) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (c *Templates) JSON(w io.Writer) error {
-	return displayJSON(w, c.items, c.resource.listView)
+	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (c *Templates) YAML(w io.Writer) error {
-	return displayYAML(w, c.items, c.resource.listView)
+	return displayYAML(w, c.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

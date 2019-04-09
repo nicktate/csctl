@@ -55,9 +55,6 @@ var (
 			Configuration: &tmplConfig,
 		},
 	}
-	tmplSingle = []types.Template{
-		tmplGood,
-	}
 )
 
 func TestNewTemplates(t *testing.T) {
@@ -70,13 +67,6 @@ func TestNewTemplates(t *testing.T) {
 
 	a = Template()
 	assert.NotNil(t, a)
-}
-
-func TestTemplatesDisableListView(t *testing.T) {
-	a := NewTemplates(nil)
-	assert.NotNil(t, a)
-	a.resource.DisableListView()
-	assert.Equal(t, a.resource.listView, false)
 }
 
 func TestTemplatesTable(t *testing.T) {
@@ -171,24 +161,4 @@ func TestGetMasterKubernetesVersion(t *testing.T) {
 	v, err = getMasterKubernetesVersion(&tmplGood)
 	assert.Nil(t, err)
 	assert.Equal(t, v, tmplK8sVersion)
-}
-
-func TestTemplatesJSON(t *testing.T) {
-	buf := new(bytes.Buffer)
-	templs := NewTemplates(tmplSingle)
-	err := templs.JSON(buf)
-	assert.Nil(t, err)
-	templs.DisableListView()
-	err = templs.JSON(buf)
-	assert.Nil(t, err)
-}
-
-func TestTemplatesYAML(t *testing.T) {
-	buf := new(bytes.Buffer)
-	templs := NewTemplates(tmplSingle)
-	err := templs.YAML(buf)
-	assert.Nil(t, err)
-	templs.DisableListView()
-	err = templs.YAML(buf)
-	assert.Nil(t, err)
 }

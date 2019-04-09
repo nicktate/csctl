@@ -68,26 +68,6 @@ func TestClusterLabelsTable(t *testing.T) {
 	assert.Equal(t, len(nodes), info.numRows)
 }
 
-func TestClusterLabelsJSON(t *testing.T) {
-	buf := new(bytes.Buffer)
-	a := NewClusterLabels(clusterLabelsSingle)
-	err := a.JSON(buf)
-	assert.Nil(t, err)
-	a.resource.DisableListView()
-	err = a.JSON(buf)
-	assert.Nil(t, err)
-}
-
-func TestClusterLabelsYAML(t *testing.T) {
-	buf := new(bytes.Buffer)
-	a := NewClusterLabels(clusterLabelsSingle)
-	err := a.YAML(buf)
-	assert.Nil(t, err)
-	a.resource.DisableListView()
-	err = a.YAML(buf)
-	assert.Nil(t, err)
-}
-
 func TestBuildClusterLabelString(t *testing.T) {
 	type stringTest struct {
 		label    types.ClusterLabel

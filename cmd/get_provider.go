@@ -34,10 +34,6 @@ var getProviderCmd = &cobra.Command{
 
 		providers := resource.NewProviders(resp)
 
-		if len(args) == 1 {
-			resource.Provider().DisableListView()
-		}
-
 		outputResponse(providers)
 		return nil
 	},

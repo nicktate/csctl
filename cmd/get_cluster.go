@@ -34,10 +34,6 @@ var getClusterCmd = &cobra.Command{
 
 		clusters := resource.NewCKEClusters(resp)
 
-		if len(args) == 1 {
-			resource.CKECluster().DisableListView()
-		}
-
 		if mineOnly {
 			me, err := getMyAccountID()
 			if err != nil {

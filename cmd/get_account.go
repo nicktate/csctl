@@ -24,10 +24,6 @@ var getAccountCmd = &cobra.Command{
 
 		accounts := resource.NewAccounts(resp)
 
-		if len(args) == 1 {
-			resource.Account().DisableListView()
-		}
-
 		outputResponse(accounts)
 		return nil
 	},

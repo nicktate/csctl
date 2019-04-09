@@ -62,12 +62,12 @@ func (p *NodePoolLabels) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (p *NodePoolLabels) JSON(w io.Writer) error {
-	return displayJSON(w, p.items, p.listView)
+	return displayJSON(w, p.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (p *NodePoolLabels) YAML(w io.Writer) error {
-	return displayYAML(w, p.items, p.listView)
+	return displayYAML(w, p.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

@@ -34,10 +34,6 @@ var getNodePoolLabelCmd = &cobra.Command{
 
 		labels := resource.NewNodePoolLabels(resp)
 
-		if len(args) == 1 {
-			resource.NodePoolLabel().DisableListView()
-		}
-
 		outputResponse(labels)
 
 		return nil

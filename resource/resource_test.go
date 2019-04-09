@@ -42,13 +42,3 @@ func TestAliases(t *testing.T) {
 	r.plural = "plugins"
 	assert.Equal(t, r.Aliases(), []string{r.plural}, "plural only")
 }
-
-func TestDisableListView(t *testing.T) {
-	r := resource{
-		name:     "plugin",
-		plural:   "plugins",
-		listView: true,
-	}
-	r.DisableListView()
-	assert.Equal(t, r.listView, false)
-}

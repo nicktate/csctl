@@ -19,10 +19,9 @@ type Users struct {
 func NewUsers(items []types.User) *Users {
 	return &Users{
 		resource: resource{
-			name:     "user",
-			plural:   "users",
-			aliases:  []string{"usr", "usrs"},
-			listView: true,
+			name:    "user",
+			plural:  "users",
+			aliases: []string{"usr", "usrs"},
 		},
 		items: items,
 	}
@@ -63,12 +62,12 @@ func (c *Users) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (c *Users) JSON(w io.Writer) error {
-	return displayJSON(w, c.items, c.resource.listView)
+	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (c *Users) YAML(w io.Writer) error {
-	return displayYAML(w, c.items, c.resource.listView)
+	return displayYAML(w, c.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

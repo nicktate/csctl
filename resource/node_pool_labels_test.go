@@ -68,26 +68,6 @@ func TestNodePoolLabelsTable(t *testing.T) {
 	assert.Equal(t, len(nodes), info.numRows)
 }
 
-func TestNodePoolLabelsJSON(t *testing.T) {
-	buf := new(bytes.Buffer)
-	a := NewNodePoolLabels(nodePoolLabelsSingle)
-	err := a.JSON(buf)
-	assert.Nil(t, err)
-	a.resource.DisableListView()
-	err = a.JSON(buf)
-	assert.Nil(t, err)
-}
-
-func TestNodePoolLabelsYAML(t *testing.T) {
-	buf := new(bytes.Buffer)
-	a := NewNodePoolLabels(nodePoolLabelsSingle)
-	err := a.YAML(buf)
-	assert.Nil(t, err)
-	a.resource.DisableListView()
-	err = a.YAML(buf)
-	assert.Nil(t, err)
-}
-
 func TestBuildNodePoolLabelString(t *testing.T) {
 	type stringTest struct {
 		label    types.NodePoolLabel

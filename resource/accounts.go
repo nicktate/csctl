@@ -18,9 +18,8 @@ type Accounts struct {
 func NewAccounts(items []types.Account) *Accounts {
 	return &Accounts{
 		resource: resource{
-			name:     "account",
-			aliases:  []string{"acct"},
-			listView: true,
+			name:    "account",
+			aliases: []string{"acct"},
 		},
 		items: items,
 	}
@@ -59,12 +58,12 @@ func (a *Accounts) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (a *Accounts) JSON(w io.Writer) error {
-	return displayJSON(w, a.items, a.resource.listView)
+	return displayJSON(w, a.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (a *Accounts) YAML(w io.Writer) error {
-	return displayYAML(w, a.items, a.resource.listView)
+	return displayYAML(w, a.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

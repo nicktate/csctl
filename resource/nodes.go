@@ -18,10 +18,9 @@ type Nodes struct {
 func NewNodes(items []types.Node) *Nodes {
 	return &Nodes{
 		resource: resource{
-			name:     "node",
-			plural:   "nodes",
-			aliases:  []string{"no", "nos"},
-			listView: true,
+			name:    "node",
+			plural:  "nodes",
+			aliases: []string{"no", "nos"},
 		},
 		items: items,
 	}
@@ -70,12 +69,12 @@ func (p *Nodes) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (p *Nodes) JSON(w io.Writer) error {
-	return displayJSON(w, p.items, p.resource.listView)
+	return displayJSON(w, p.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (p *Nodes) YAML(w io.Writer) error {
-	return displayYAML(w, p.items, p.resource.listView)
+	return displayYAML(w, p.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

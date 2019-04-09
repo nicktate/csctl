@@ -11,16 +11,14 @@ type resourceInterface interface {
 	Plural() string
 	Aliases() []string
 	HasAlias(name string) bool
-	DisableListView()
 }
 
 type resource struct {
 	resourceInterface
 
-	name     string
-	plural   string
-	aliases  []string
-	listView bool
+	name    string
+	plural  string
+	aliases []string
 }
 
 func (r *resource) Name() string {
@@ -37,8 +35,4 @@ func (r *resource) Aliases() []string {
 	}
 
 	return r.aliases
-}
-
-func (r *resource) DisableListView() {
-	r.listView = false
 }

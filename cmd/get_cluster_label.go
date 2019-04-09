@@ -34,10 +34,6 @@ var getClusterLabelCmd = &cobra.Command{
 
 		labels := resource.NewClusterLabels(resp)
 
-		if len(args) == 1 {
-			resource.ClusterLabel().DisableListView()
-		}
-
 		outputResponse(labels)
 
 		return nil

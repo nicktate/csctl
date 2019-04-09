@@ -34,10 +34,6 @@ var getTemplateCmd = &cobra.Command{
 
 		templates := resource.NewTemplates(resp)
 
-		if len(args) == 1 {
-			resource.Template().DisableListView()
-		}
-
 		if mineOnly {
 			me, err := getMyAccountID()
 			if err != nil {

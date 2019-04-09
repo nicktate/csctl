@@ -18,9 +18,8 @@ type Providers struct {
 func NewProviders(items []types.Provider) *Providers {
 	return &Providers{
 		resource: resource{
-			name:     "provider",
-			plural:   "providers",
-			listView: true,
+			name:   "provider",
+			plural: "providers",
 		},
 		items: items,
 	}
@@ -61,12 +60,12 @@ func (c *Providers) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (c *Providers) JSON(w io.Writer) error {
-	return displayJSON(w, c.items, c.resource.listView)
+	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (c *Providers) YAML(w io.Writer) error {
-	return displayYAML(w, c.items, c.resource.listView)
+	return displayYAML(w, c.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer

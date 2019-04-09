@@ -17,10 +17,9 @@ type NodePools struct {
 func NewNodePools(items []types.NodePool) *NodePools {
 	return &NodePools{
 		resource: resource{
-			name:     "node-pool",
-			plural:   "node-pools",
-			aliases:  []string{"nodepool", "nodepools", "np", "nps"},
-			listView: true,
+			name:    "node-pool",
+			plural:  "node-pools",
+			aliases: []string{"nodepool", "nodepools", "np", "nps"},
 		},
 		items: items,
 	}
@@ -82,12 +81,12 @@ func (p *NodePools) Table(w io.Writer) error {
 
 // JSON outputs the JSON representation to the given writer
 func (p *NodePools) JSON(w io.Writer) error {
-	return displayJSON(w, p.items, p.resource.listView)
+	return displayJSON(w, p.items)
 }
 
 // YAML outputs the YAML representation to the given writer
 func (p *NodePools) YAML(w io.Writer) error {
-	return displayYAML(w, p.items, p.resource.listView)
+	return displayYAML(w, p.items)
 }
 
 // JSONPath outputs the executed JSONPath template to the given writer
