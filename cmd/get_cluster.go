@@ -43,7 +43,7 @@ var getClusterCmd = &cobra.Command{
 			clusters.FilterByOwnerID(me)
 		}
 
-		outputResponse(clusters)
+		outputResponse(clusters, len(args) != 1)
 		return nil
 	},
 }

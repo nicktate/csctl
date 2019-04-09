@@ -98,12 +98,20 @@ func getPolicyConfiguration(config *types.ScalingPolicyConfiguration, scaleDown 
 }
 
 // JSON outputs the JSON representation to the given writer
-func (p *AutoscalingPolicies) JSON(w io.Writer) error {
+func (p *AutoscalingPolicies) JSON(w io.Writer, listView bool) error {
+	if !listView && len(p.items) == 1 {
+		return displayJSON(w, p.items[0])
+	}
+
 	return displayJSON(w, p.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (p *AutoscalingPolicies) YAML(w io.Writer) error {
+func (p *AutoscalingPolicies) YAML(w io.Writer, listView bool) error {
+	if !listView && len(p.items) == 1 {
+		return displayYAML(w, p.items[0])
+	}
+
 	return displayYAML(w, p.items)
 }
 

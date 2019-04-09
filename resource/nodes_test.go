@@ -30,7 +30,38 @@ var (
 			UpdatedAt: &nodeTime,
 		},
 	}
+
+	nodesSingle = []types.Node{
+		{
+			ID: types.UUID("1234"),
+			Status: &types.NodeStatus{
+				Type: strptr("RUNNING"),
+			},
+			CreatedAt: &nodeTime,
+			UpdatedAt: &nodeTime,
+		},
+	}
 )
+
+func TestNodesJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodes(nodesSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestNodesYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodes(nodesSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewNodes(t *testing.T) {
 	a := NewNodes(nil)

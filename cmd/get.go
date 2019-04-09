@@ -17,17 +17,17 @@ var (
 	mineOnly     bool
 )
 
-func outputResponse(d resource.Displayable) {
+func outputResponse(d resource.Displayable, listView bool) {
 	var err error
 	switch {
 	case outputFormat == "" || outputFormat == "table":
 		err = d.Table(os.Stdout)
 
 	case outputFormat == "json":
-		err = d.JSON(os.Stdout)
+		err = d.JSON(os.Stdout, listView)
 
 	case outputFormat == "yaml":
-		err = d.YAML(os.Stdout)
+		err = d.YAML(os.Stdout, listView)
 
 	case strings.HasPrefix(outputFormat, "jsonpath"):
 		fields := strings.SplitN(outputFormat, "=", 2)

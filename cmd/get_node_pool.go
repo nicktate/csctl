@@ -33,7 +33,7 @@ var getNodePoolCmd = &cobra.Command{
 		}
 
 		nps := resource.NewNodePools(resp)
-		outputResponse(nps)
+		outputResponse(nps, len(args) != 1)
 
 		return nil
 	},

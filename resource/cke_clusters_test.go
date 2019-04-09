@@ -32,7 +32,39 @@ var (
 			CreatedAt: &ckeClusterTime,
 		},
 	}
+
+	ckeClusterSingle = []types.CKECluster{
+		{
+			ID:           types.UUID("1111"),
+			ProviderName: strptr("google"),
+			Status: &types.CKEClusterStatus{
+				Type: strptr("RUNNING"),
+			},
+			OwnerID:   types.UUID("1111"),
+			CreatedAt: &ckeClusterTime,
+		},
+	}
 )
+
+func TestCKEClustersJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	cluster := NewCKEClusters(ckeClusterSingle)
+	err := cluster.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = cluster.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestCKEClustersYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	cluster := NewCKEClusters(ckeClusterSingle)
+	err := cluster.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = cluster.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewCKEClusters(t *testing.T) {
 	a := NewCKEClusters(nil)

@@ -65,7 +65,7 @@ var getPluginCatalogCmd = &cobra.Command{
 			return errors.New("invalid flag combination - see usage")
 		}
 
-		outputResponse(plugins)
+		outputResponse(plugins, false)
 		return nil
 	},
 }

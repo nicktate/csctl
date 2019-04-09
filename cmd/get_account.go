@@ -23,8 +23,8 @@ var getAccountCmd = &cobra.Command{
 		}
 
 		accounts := resource.NewAccounts(resp)
-
-		outputResponse(accounts)
+		// this will only ever return one account and should not use list view
+		outputResponse(accounts, false)
 		return nil
 	},
 }

@@ -120,12 +120,12 @@ func (pc *PluginsCatalog) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (pc *PluginsCatalog) JSON(w io.Writer) error {
+func (pc *PluginsCatalog) JSON(w io.Writer, _ bool) error {
 	return displayJSON(w, pc.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (pc *PluginsCatalog) YAML(w io.Writer) error {
+func (pc *PluginsCatalog) YAML(w io.Writer, _ bool) error {
 	return displayYAML(w, pc.items)
 }
 

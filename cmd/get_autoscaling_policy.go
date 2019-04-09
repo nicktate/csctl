@@ -46,7 +46,7 @@ var getAutoscalingPolicyCmd = &cobra.Command{
 		}
 
 		nps := resource.NewAutoscalingPolicies(resp)
-		outputResponse(nps)
+		outputResponse(nps, len(args) != 1)
 
 		return nil
 	},

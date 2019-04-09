@@ -40,6 +40,26 @@ var (
 	}
 )
 
+func TestClusterLabelsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewClusterLabels(clusterLabelsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestClusterLabelsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewClusterLabels(clusterLabelsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
+
 func TestNewClusterLabels(t *testing.T) {
 	a := NewNodes(nil)
 	assert.NotNil(t, a)

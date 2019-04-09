@@ -34,7 +34,7 @@ var getClusterLabelCmd = &cobra.Command{
 
 		labels := resource.NewClusterLabels(resp)
 
-		outputResponse(labels)
+		outputResponse(labels, len(args) != 1)
 
 		return nil
 	},

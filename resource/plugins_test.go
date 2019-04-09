@@ -28,7 +28,37 @@ var (
 			CreatedAt:      &plugTime,
 		},
 	}
+
+	plugsSingle = []types.Plugin{
+		{
+			ID:             types.UUID("1234"),
+			Type:           strptr("logs"),
+			Implementation: strptr("kubernetes"),
+			Version:        strptr("v1.0.0"),
+			CreatedAt:      &plugTime,
+		},
+	}
 )
+
+func TestPluginsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewPlugins(plugsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestPluginsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewPlugins(plugsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewPlugins(t *testing.T) {
 	a := NewPlugins(nil)

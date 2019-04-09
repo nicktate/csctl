@@ -41,7 +41,7 @@ var getOrganizationCmd = &cobra.Command{
 			orgs.FilterByOwnerID(me)
 		}
 
-		outputResponse(orgs)
+		outputResponse(orgs, len(args) != 1)
 		return nil
 	},
 }

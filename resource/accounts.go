@@ -57,12 +57,20 @@ func (a *Accounts) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (a *Accounts) JSON(w io.Writer) error {
+func (a *Accounts) JSON(w io.Writer, listView bool) error {
+	if !listView && len(a.items) == 1 {
+		return displayJSON(w, a.items[0])
+	}
+
 	return displayJSON(w, a.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (a *Accounts) YAML(w io.Writer) error {
+func (a *Accounts) YAML(w io.Writer, listView bool) error {
+	if !listView && len(a.items) == 1 {
+		return displayYAML(w, a.items[0])
+	}
+
 	return displayYAML(w, a.items)
 }
 

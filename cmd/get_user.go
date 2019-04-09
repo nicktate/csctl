@@ -26,7 +26,7 @@ var getUserCmd = &cobra.Command{
 
 		users := resource.NewUsers(resp)
 
-		outputResponse(users)
+		outputResponse(users, true)
 		return nil
 	},
 }

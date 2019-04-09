@@ -52,6 +52,26 @@ func TestNewNodePoolLabels(t *testing.T) {
 	assert.NotNil(t, a)
 }
 
+func TestNodePoolLabelsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodePoolLabels(nodePoolLabelsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestNodePoolLabelsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodePoolLabels(nodePoolLabelsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
+
 func TestNodePoolLabelsTable(t *testing.T) {
 	buf := new(bytes.Buffer)
 

@@ -24,7 +24,35 @@ var (
 			CreatedAt: &acctTime,
 		},
 	}
+
+	acctSingle = []types.Account{
+		{
+			Name:      strptr("test3"),
+			ID:        types.UUID("1234"),
+			CreatedAt: &acctTime,
+		},
+	}
 )
+
+func TestAccountsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewAccounts(acctSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestAccountsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewAccounts(acctSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewAccounts(t *testing.T) {
 	a := NewAccounts(nil)

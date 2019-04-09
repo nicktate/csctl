@@ -61,12 +61,20 @@ func (p *ClusterLabels) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (p *ClusterLabels) JSON(w io.Writer) error {
+func (p *ClusterLabels) JSON(w io.Writer, listView bool) error {
+	if !listView && len(p.items) == 1 {
+		return displayJSON(w, p.items[0])
+	}
+
 	return displayJSON(w, p.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (p *ClusterLabels) YAML(w io.Writer) error {
+func (p *ClusterLabels) YAML(w io.Writer, listView bool) error {
+	if !listView && len(p.items) == 1 {
+		return displayYAML(w, p.items[0])
+	}
+
 	return displayYAML(w, p.items)
 }
 

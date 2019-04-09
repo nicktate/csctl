@@ -33,7 +33,7 @@ var getPluginCmd = &cobra.Command{
 		}
 
 		plugs := resource.NewPlugins(resp)
-		outputResponse(plugs)
+		outputResponse(plugs, len(args) != 1)
 		return nil
 	},
 }

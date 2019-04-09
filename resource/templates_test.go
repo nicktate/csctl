@@ -55,7 +55,31 @@ var (
 			Configuration: &tmplConfig,
 		},
 	}
+
+	tmplSingle = []types.Template{
+		tmplGood,
+	}
 )
+
+func TestTemplatesJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	templs := NewTemplates(tmplSingle)
+	err := templs.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = templs.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestTemplatesYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	templs := NewTemplates(tmplSingle)
+	err := templs.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = templs.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewTemplates(t *testing.T) {
 	a := NewTemplates(nil)

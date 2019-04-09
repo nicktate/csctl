@@ -33,7 +33,8 @@ var getRegistryCmd = &cobra.Command{
 		}
 
 		regs := resource.NewRegistries(resp)
-		outputResponse(regs)
+
+		outputResponse(regs, len(args) != 1)
 		return nil
 	},
 }

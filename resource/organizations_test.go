@@ -26,7 +26,36 @@ var (
 			CreatedAt: &orgTime,
 		},
 	}
+
+	orgsSingle = []types.Organization{
+		{
+			Name:      strptr("test3"),
+			ID:        types.UUID("1234"),
+			OwnerID:   types.UUID("1234"),
+			CreatedAt: &orgTime,
+		},
+	}
 )
+
+func TestOrganizationsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewOrganizations(orgsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestOrganizationsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewOrganizations(orgsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewOrganizations(t *testing.T) {
 	a := NewOrganizations(nil)

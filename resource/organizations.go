@@ -61,12 +61,20 @@ func (o *Organizations) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (o *Organizations) JSON(w io.Writer) error {
+func (o *Organizations) JSON(w io.Writer, listView bool) error {
+	if !listView && len(o.items) == 1 {
+		return displayJSON(w, o.items[0])
+	}
+
 	return displayJSON(w, o.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (o *Organizations) YAML(w io.Writer) error {
+func (o *Organizations) YAML(w io.Writer, listView bool) error {
+	if !listView && len(o.items) == 1 {
+		return displayYAML(w, o.items[0])
+	}
+
 	return displayYAML(w, o.items)
 }
 

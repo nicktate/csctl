@@ -32,7 +32,7 @@ var getAccessTokenCmd = &cobra.Command{
 
 		tokens := resource.NewAccessTokens(resp)
 
-		outputResponse(tokens)
+		outputResponse(tokens, len(args) != 1)
 		return nil
 	},
 }

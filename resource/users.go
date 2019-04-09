@@ -61,12 +61,12 @@ func (c *Users) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (c *Users) JSON(w io.Writer) error {
+func (c *Users) JSON(w io.Writer, _ bool) error {
 	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (c *Users) YAML(w io.Writer) error {
+func (c *Users) YAML(w io.Writer, _ bool) error {
 	return displayYAML(w, c.items)
 }
 

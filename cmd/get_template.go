@@ -47,7 +47,7 @@ var getTemplateCmd = &cobra.Command{
 		// since consumers should never care about non-CKE clusters.
 		templates.FilterByEngine(types.TemplateEngineContainershipKubernetesEngine)
 
-		outputResponse(templates)
+		outputResponse(templates, len(args) != 1)
 		return nil
 	},
 }

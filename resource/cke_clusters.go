@@ -62,12 +62,20 @@ func (c *CKEClusters) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (c *CKEClusters) JSON(w io.Writer) error {
+func (c *CKEClusters) JSON(w io.Writer, listView bool) error {
+	if !listView && len(c.items) == 1 {
+		return displayJSON(w, c.items[0])
+	}
+
 	return displayJSON(w, c.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (c *CKEClusters) YAML(w io.Writer) error {
+func (c *CKEClusters) YAML(w io.Writer, listView bool) error {
+	if !listView && len(c.items) == 1 {
+		return displayYAML(w, c.items[0])
+	}
+
 	return displayYAML(w, c.items)
 }
 

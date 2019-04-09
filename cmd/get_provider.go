@@ -34,7 +34,7 @@ var getProviderCmd = &cobra.Command{
 
 		providers := resource.NewProviders(resp)
 
-		outputResponse(providers)
+		outputResponse(providers, len(args) != 1)
 		return nil
 	},
 }

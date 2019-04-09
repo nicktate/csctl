@@ -59,12 +59,20 @@ func (t *AccessTokens) Table(w io.Writer) error {
 }
 
 // JSON outputs the JSON representation to the given writer
-func (t *AccessTokens) JSON(w io.Writer) error {
+func (t *AccessTokens) JSON(w io.Writer, listView bool) error {
+	if !listView && len(t.items) == 1 {
+		return displayJSON(w, t.items[0])
+	}
+
 	return displayJSON(w, t.items)
 }
 
 // YAML outputs the YAML representation to the given writer
-func (t *AccessTokens) YAML(w io.Writer) error {
+func (t *AccessTokens) YAML(w io.Writer, listView bool) error {
+	if !listView && len(t.items) == 1 {
+		return displayYAML(w, t.items[0])
+	}
+
 	return displayYAML(w, t.items)
 }
 

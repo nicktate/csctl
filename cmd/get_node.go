@@ -33,7 +33,7 @@ var getNodeCmd = &cobra.Command{
 		}
 
 		nps := resource.NewNodes(resp)
-		outputResponse(nps)
+		outputResponse(nps, len(args) != 1)
 
 		return nil
 	},

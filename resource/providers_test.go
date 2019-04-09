@@ -26,7 +26,36 @@ var (
 			CreatedAt:   &providerTime,
 		},
 	}
+
+	providersSingle = []types.Provider{
+		{
+			ID:          types.UUID("1234"),
+			Provider:    strptr("google"),
+			Description: strptr("google description"),
+			CreatedAt:   &providerTime,
+		},
+	}
 )
+
+func TestProvidersJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewProviders(providersSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestProvidersYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewProviders(providersSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewProviders(t *testing.T) {
 	a := NewProviders(nil)

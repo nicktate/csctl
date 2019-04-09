@@ -16,8 +16,8 @@ type Displayable interface {
 	columns() []string
 
 	Table(w io.Writer) error
-	JSON(w io.Writer) error
-	YAML(w io.Writer) error
+	JSON(w io.Writer, listView bool) error
+	YAML(w io.Writer, listView bool) error
 	JSONPath(w io.Writer, template string) error
 }
 

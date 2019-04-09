@@ -31,7 +31,38 @@ var (
 			DockerVersion:     &dockerVersion,
 		},
 	}
+
+	npsSingle = []types.NodePool{
+		{
+			Name:              strptr("test3"),
+			ID:                types.UUID("1234"),
+			KubernetesMode:    strptr("master"),
+			KubernetesVersion: strptr("1.12.1"),
+			EtcdVersion:       &etcdVersion,
+			DockerVersion:     &dockerVersion,
+		},
+	}
 )
+
+func TestNodePoolsJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodePools(npsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestNodePoolsYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewNodePools(npsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewNodePools(t *testing.T) {
 	a := NewNodePools(nil)

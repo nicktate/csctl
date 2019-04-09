@@ -28,7 +28,37 @@ var (
 			Serveraddress: strptr("2.0.0"),
 		},
 	}
+
+	regsSingle = []types.Registry{
+		{
+			ID:            types.UUID("1234"),
+			CreatedAt:     &regTime,
+			Description:   strptr("logs"),
+			Provider:      strptr("kubernetes"),
+			Serveraddress: strptr("v1.0.0"),
+		},
+	}
 )
+
+func TestRegistriesJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewRegistries(regsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestRegistriesYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewRegistries(regsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewRegistries(t *testing.T) {
 	a := NewRegistries(nil)

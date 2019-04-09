@@ -65,7 +65,52 @@ var (
 			SamplePeriod:   int32ptr(800),
 		},
 	}
+
+	aspsSingle = []types.AutoscalingPolicy{
+		{
+			Name:           strptr("test4"),
+			ID:             types.UUID("1234"),
+			MetricsBackend: "prometheus",
+			Metric:         strptr("cpu"),
+			ScalingPolicy: &types.ScalingPolicy{
+				ScaleUp: &types.ScalingPolicyConfiguration{
+					AdjustmentType:     strptr("percent"),
+					AdjustmentValue:    float32ptr(10),
+					ComparisonOperator: strptr(">="),
+					Threshold:          float32ptr(0.5),
+				},
+				ScaleDown: &types.ScalingPolicyConfiguration{
+					AdjustmentType:     strptr("percent"),
+					AdjustmentValue:    float32ptr(30),
+					ComparisonOperator: strptr("<"),
+					Threshold:          float32ptr(0.3),
+				},
+			},
+			PollInterval: int32ptr(15),
+			SamplePeriod: int32ptr(600),
+		},
+	}
 )
+
+func TestAutoscalingPoliciesJSON(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewAutoscalingPolicies(aspsSingle)
+	err := a.JSON(buf, true)
+	assert.Nil(t, err)
+
+	err = a.JSON(buf, false)
+	assert.Nil(t, err)
+}
+
+func TestAutoscalingPoliciesYAML(t *testing.T) {
+	buf := new(bytes.Buffer)
+	a := NewAutoscalingPolicies(aspsSingle)
+	err := a.YAML(buf, true)
+	assert.Nil(t, err)
+
+	err = a.YAML(buf, false)
+	assert.Nil(t, err)
+}
 
 func TestNewAutoscalingPolicies(t *testing.T) {
 	a := NewAutoscalingPolicies(nil)

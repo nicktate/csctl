@@ -34,7 +34,7 @@ var getNodePoolLabelCmd = &cobra.Command{
 
 		labels := resource.NewNodePoolLabels(resp)
 
-		outputResponse(labels)
+		outputResponse(labels, len(args) != 1)
 
 		return nil
 	},
