@@ -4,6 +4,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/containership/csctl)](https://goreportcard.com/report/github.com/containership/csctl)
 [![codecov](https://codecov.io/gh/containership/csctl/branch/master/graph/badge.svg)](https://codecov.io/gh/containership/csctl)
 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
+
 `csctl` is a command line interface for Containership Cloud.
 
 This repository also contains the go client for interacting with Containership Cloud.
