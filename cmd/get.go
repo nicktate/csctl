@@ -32,7 +32,7 @@ func outputResponse(d resource.Displayable, listView bool) {
 	case strings.HasPrefix(outputFormat, "jsonpath"):
 		fields := strings.SplitN(outputFormat, "=", 2)
 		if len(fields) != 2 {
-			err = errors.New("Please specify jsonpath using -ojsonpath=<path>")
+			err = errors.New("please specify jsonpath using -ojsonpath=<path>")
 			break
 		}
 

@@ -7,7 +7,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/containership/csctl/resource/options"
-	//"github.com/containership/csctl/resource/plugin"
 )
 
 var doCreateClusterOpts options.DigitalOceanClusterCreate

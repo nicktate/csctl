@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
 	"github.com/containership/csctl/cloud/api/types"
@@ -25,10 +24,6 @@ var upgradePluginCmd = &cobra.Command{
 	PreRunE: clusterScopedPreRunE,
 
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if version == "" {
-			return errors.New("please supply target version using --version")
-		}
-
 		req := &types.PluginUpgradeRequest{
 			Version: &version,
 		}
@@ -52,4 +47,5 @@ func init() {
 	bindCommandToClusterScope(upgradePluginCmd, false)
 
 	upgradePluginCmd.Flags().StringVarP(&version, "version", "v", "", "plugin version to upgrade to")
+	upgradePluginCmd.MarkFlagRequired("version")
 }

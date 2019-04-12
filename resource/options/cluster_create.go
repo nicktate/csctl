@@ -35,19 +35,19 @@ type ClusterCreate struct {
 // DefaultAndValidate defaults and validates all options
 func (o *ClusterCreate) DefaultAndValidate() error {
 	if o.TemplateID == "" {
-		return errors.New("please specify template with --template")
+		return errors.New("template ID is required")
 	}
 
 	if o.ProviderID == "" {
-		return errors.New("please specify provider credentials with --provider")
+		return errors.New("provider ID is required")
 	}
 
 	if o.Name == "" {
-		return errors.New("please specify name with --name")
+		return errors.New("name is required")
 	}
 
 	if o.Environment == "" {
-		return errors.New("please specify name with --environment")
+		return errors.New("environment is required")
 	}
 
 	if err := o.defaultAndValidateMetrics(); err != nil {

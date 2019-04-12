@@ -25,10 +25,6 @@ var upgradeNodePoolCmd = &cobra.Command{
 	PreRunE: nodePoolScopedPreRunE,
 
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if kubernetesVersion == "" {
-			return errors.New("please supply target Kubernetes version using --kubernetes-version")
-		}
-
 		req := &types.NodePoolUpgradeRequest{
 			KubernetesVersion: &kubernetesVersion,
 		}
@@ -50,4 +46,5 @@ func init() {
 	bindCommandToNodePoolScope(upgradeNodePoolCmd, false)
 
 	upgradeNodePoolCmd.Flags().StringVar(&kubernetesVersion, "kubernetes-version", "", "Kubernetes version to upgrade to")
+	upgradeNodePoolCmd.MarkFlagRequired("kubernetes-version")
 }
