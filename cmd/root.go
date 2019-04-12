@@ -32,6 +32,11 @@ var (
 )
 
 func orgScopedPreRunE(cmd *cobra.Command, _ []string) error {
+	if organizationID != "" {
+		// Command line flag was set and it takes precedence
+		return nil
+	}
+
 	organizationID = viper.GetString("organization")
 	if organizationID == "" {
 		return errors.New("please specify an organization via --organization or config file")
@@ -43,6 +48,11 @@ func orgScopedPreRunE(cmd *cobra.Command, _ []string) error {
 func clusterScopedPreRunE(cmd *cobra.Command, _ []string) error {
 	if err := orgScopedPreRunE(cmd, nil); err != nil {
 		return err
+	}
+
+	if clusterID != "" {
+		// Command line flag was set and it takes precedence
+		return nil
 	}
 
 	clusterID = viper.GetString("cluster")
@@ -58,6 +68,11 @@ func nodePoolScopedPreRunE(cmd *cobra.Command, _ []string) error {
 		return err
 	}
 
+	if nodePoolID != "" {
+		// Command line flag was set and it takes precedence
+		return nil
+	}
+
 	nodePoolID = viper.GetString("node-pool")
 	if nodePoolID == "" {
 		return errors.New("please specify a node pool via --node-pool or config file")
@@ -67,6 +82,11 @@ func nodePoolScopedPreRunE(cmd *cobra.Command, _ []string) error {
 }
 
 func clientsetRequiredPreRunE(cmd *cobra.Command, _ []string) error {
+	if userToken != "" {
+		// Command line flag was set and it takes precedence
+		return nil
+	}
+
 	userToken = viper.GetString("token")
 	if userToken == "" {
 		return errors.New("please specify a token via --token or config file")
@@ -83,6 +103,9 @@ func clientsetRequiredPreRunE(cmd *cobra.Command, _ []string) error {
 	return err
 }
 
+// Note that for all of the flags that we allow to override the config file,
+// we cannot use viper.BindPFlag() as that only works for a single flagset
+// and we use the same flag across multiple flagsets.
 func bindCommandToOrganizationScope(cmd *cobra.Command, persistent bool) {
 	var flagset *pflag.FlagSet
 	if persistent {
@@ -92,7 +115,6 @@ func bindCommandToOrganizationScope(cmd *cobra.Command, persistent bool) {
 	}
 
 	flagset.StringVar(&organizationID, "organization", "", "organization to use")
-	viper.BindPFlag("organization", flagset.Lookup("organization"))
 }
 
 func bindCommandToClusterScope(cmd *cobra.Command, persistent bool) {
@@ -106,7 +128,6 @@ func bindCommandToClusterScope(cmd *cobra.Command, persistent bool) {
 	}
 
 	flagset.StringVar(&clusterID, "cluster", "", "cluster to use")
-	viper.BindPFlag("cluster", flagset.Lookup("cluster"))
 }
 
 func bindCommandToNodePoolScope(cmd *cobra.Command, persistent bool) {
@@ -120,14 +141,12 @@ func bindCommandToNodePoolScope(cmd *cobra.Command, persistent bool) {
 	}
 
 	flagset.StringVar(&nodePoolID, "node-pool", "", "node pool to use")
-	viper.BindPFlag("node-pool", flagset.Lookup("node-pool"))
 }
 
 // assumes that if a clientset is required for a command,
 // it should be persistent (required for all subcommands)
 func requireClientset(cmd *cobra.Command) {
 	cmd.PersistentFlags().StringVar(&userToken, "token", "", "Containership Cloud token to use")
-	viper.BindPFlag("token", cmd.PersistentFlags().Lookup("token"))
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -159,7 +178,6 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&debugEnabled, "debug", false, "enable/disable debug mode (trace all HTTP requests)")
 
 	rootCmd.PersistentFlags().StringVar(&userToken, "token", "", "Containership token to authenticate with")
-	viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token"))
 }
 
 // initConfig reads in config file and ENV variables if set.
