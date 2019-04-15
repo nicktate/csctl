@@ -151,11 +151,11 @@ func requireClientset(cmd *cobra.Command) {
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "csctl",
-	Short: "Command line client for interacting with Containership",
-	Long: `TODO
+	Use: "csctl",
+	Long: `csctl is a command line interface for Containership.
 
-This is a long description`,
+Find more information at: https://github.com/containership/csctl`,
+
 	SilenceUsage: true,
 }
 

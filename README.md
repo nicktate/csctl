@@ -57,10 +57,36 @@ More documentation will be added as the project matures.
 `csctl` defaults to a config file located at `~/.containership/csctl.yaml`.
 You may also choose to manually specify a config file using `--config`.
 
-The only config option to set today is `token`.
-Because the CLI does not yet support authorization, you must manually specify a `token`.
-Your user token can be obtained by using the developer tools of your favorite browser to find the `JWT` for an API request.
-Authorization is coming soon, but feel free to reach out with any questions in the meantime.
+#### Authentication
+
+A token is required to authenticate with Containership Cloud for almost every command.
+
+It's recommended to generate a new [Personal Access Token](https://docs.containership.io/developer-resources/personal-access-tokens) through the UI for this.
+`csctl` can then be configured to use this token by adding it under the `token` key in the config file.
+The token can also be specified on the command line via `--token` for any command that requires it; however, setting the `token` key of the config file is the preferred approach to limit command line complexity.
+
+#### Contexts
+
+When interacting with Containership resources, it's often required to specify an organization, cluster, etc.
+Instead of supplying these options via command lines flags every time, it's possible to specify them in the config file, creating a basic context to operate within.
+Command line flags will override config file keys of the same name.
+
+For example, one way to list all clusters in an organization is to supply the `--organization` flag on the command line as follows:
+
+```
+csctl get clusters --organization a4de3b04-60eb-45c2-a5d5-0d145fa1de58
+```
+
+However, chances are that most of the work a user does is within the context of a single organization.
+In this case, a better way to specify the organization context is through the config file.
+The most basic config file that can accomplish the same as above but without any command line flags is the following:
+
+```
+token: <containership_cloud_token>
+organization: a4de3b04-60eb-45c2-a5d5-0d145fa1de58
+```
+
+The same context concept extends to clusters and node pools.
 
 ## Contributing
 
