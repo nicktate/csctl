@@ -1,4 +1,4 @@
-# csctl
+# csctl - The Official Containership CLI
 
 [![CircleCI](https://circleci.com/gh/containership/csctl.svg?style=svg)](https://circleci.com/gh/containership/csctl)
 [![Go Report Card](https://goreportcard.com/badge/github.com/containership/csctl)](https://goreportcard.com/report/github.com/containership/csctl)
@@ -6,10 +6,36 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
 
-`csctl` is a command line interface for Containership Cloud.
+```
+csctl is a command line interface for Containership.
+
+Find more information at: https://github.com/containership/csctl
+
+Usage:
+  csctl [command]
+
+Available Commands:
+  create      Create a resource
+  delete      Delete a resource
+  export      Export a resource
+  get         Get a resource
+  help        Help about any command
+  scale       Scale a node pool
+  ssh         SSH into nodes of a cluster
+  upgrade     Upgrade a cluster node pool or resource
+  version     Output the current version of csctl
+
+Flags:
+      --config string   config file (default is ~/.containership/csctl.yaml)
+      --debug           enable/disable debug mode (trace all HTTP requests)
+  -h, --help            help for csctl
+      --token string    Containership token to authenticate with
+
+Use "csctl [command] --help" for more information about a command.
+```
 
 This repository also contains the go client for interacting with Containership Cloud.
-For more info, please refer to [the client documentation](cloud/README.md)
+For more info, please refer to [the client documentation](cloud/README.md).
 
 **Warning**: This project is currently under active development and is subject to breaking changes without notice.
 
