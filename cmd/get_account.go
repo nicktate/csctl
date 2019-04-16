@@ -9,8 +9,12 @@ import (
 
 // getAccountCmd represents the getAccount command
 var getAccountCmd = &cobra.Command{
-	Use:     "account",
-	Short:   "Get your account",
+	Use:   "account",
+	Short: "Get your account",
+	Long: `Get information about your account.
+
+This command does not accept any arguments. A user can only view their own account.`,
+
 	Aliases: resource.Account().Aliases(),
 
 	RunE: func(cmd *cobra.Command, args []string) error {

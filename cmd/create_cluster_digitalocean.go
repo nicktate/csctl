@@ -17,6 +17,11 @@ var createClusterDigitalOceanCmd = &cobra.Command{
 	Short:   "Create a DigitalOcean cluster",
 	Args:    cobra.NoArgs,
 	Aliases: []string{"do"},
+	Long: `Create a DigitalOcean cluster.
+
+For general usage info for cluster creation, see:
+
+    csctl create cluster --help`,
 
 	PreRunE: orgScopedPreRunE,
 

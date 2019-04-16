@@ -21,7 +21,7 @@ func NewAccessTokens(items []types.AccessToken) *AccessTokens {
 		resource: resource{
 			name:    "access-token",
 			plural:  "access-tokens",
-			aliases: []string{"token", "tokens"},
+			aliases: []string{"token", "tokens", "pat", "pats"},
 		},
 		items: items,
 	}

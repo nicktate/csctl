@@ -20,6 +20,24 @@ var getPluginCatalogCmd = &cobra.Command{
 	Short:   "Get the plugin catalog",
 	Aliases: resource.PluginCatalog().Aliases(),
 
+	Long: `Get the plugin catalog, which is a list of all supported plugins with
+version compatibility details.
+
+To get the full plugin catalog, simply run:
+
+	csctl get plugin-catalog
+
+You may also wish to filter the results by plugin type, implementation, and version. For example:
+
+	# Get all container network interface (CNI) plugins
+	csctl get plugin-catalog --type cni
+
+	# Get all versions of the Calico CNI plugin (note that --type is required)
+	csctl get plugin-catalog --type cni --implementation calico
+
+	# Get a specific version of the Calico CNI plugin (note that all flags are required)
+	csctl get plugin-catalog --type cni --implementation calico --version 2.0.0`,
+
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var plugins *resource.PluginsCatalog
 		switch {

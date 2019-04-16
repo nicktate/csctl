@@ -19,6 +19,13 @@ var upgradeNodePoolCmd = &cobra.Command{
 	Use:     "node-pool",
 	Short:   "Upgrade the Kubernetes version for a node pool",
 	Aliases: resource.NodePool().Aliases(),
+	Long: `Upgrade the Kubernetes version for a node pool.
+
+Node pool upgrades are performed on nodes in-place. Nodes are upgraded one-by-one.
+
+There are several Kubernetes version skew requirements that Containership enforces.
+
+For more information, please see https://docs.containership.io/cluster-management/upgrading-kubernetes-versions.`,
 
 	Args: cobra.NoArgs,
 

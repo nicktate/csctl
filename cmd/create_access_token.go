@@ -15,8 +15,21 @@ var accessTokenOpts options.AccessTokenCreate
 // createAccessTokenCmd represents the createAccessToken command
 var createAccessTokenCmd = &cobra.Command{
 	Use:     "access-token",
-	Short:   "Create an access token",
+	Short:   "Create a personal access token",
 	Aliases: resource.AccessToken().Aliases(),
+	Long: `Create a personal access token (PAT) for authenticating with Containership Cloud.
+
+If token creation is successful, the value will be printed to stdout. You *must* copy
+the value when it is displayed, as it will not be displayed again.
+
+The generated token can be used as the token for csctl itself, if desired.
+
+Personal access tokens do not expire but can be deleted using:
+
+	csctl delete access-token <access_token_id>"
+
+For more information on PATs, please see https://docs.containership.io/developer-resources/personal-access-tokens.
+`,
 
 	Args: cobra.NoArgs,
 
