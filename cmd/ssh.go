@@ -93,9 +93,10 @@ For more information on tmux, please visit https://github.com/tmux/tmux.`,
 
 			// Semicolons are used to delimit commands to tmux
 			tmuxArgs = append(tmuxArgs, fmt.Sprintf("%s;", sshCmd))
-		}
 
-		tmuxArgs = append(tmuxArgs, "select-layout", "tiled;")
+			// Evenly divide layout as we go
+			tmuxArgs = append(tmuxArgs, "select-layout", "tiled;")
+		}
 
 		if syncPanes {
 			tmuxArgs = append(tmuxArgs, "set-window-option", "synchronize-panes", "on;")
