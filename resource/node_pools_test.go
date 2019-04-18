@@ -17,6 +17,7 @@ var (
 		{
 			Name:              strptr("test1"),
 			ID:                types.UUID("1234"),
+			Os:                strptr("ubuntu"),
 			KubernetesMode:    strptr("master"),
 			KubernetesVersion: strptr("1.12.1"),
 			EtcdVersion:       &etcdVersion,
@@ -25,6 +26,7 @@ var (
 		{
 			Name:              strptr("test2"),
 			ID:                types.UUID("4321"),
+			Os:                strptr("ubuntu"),
 			KubernetesMode:    strptr("worker"),
 			KubernetesVersion: strptr("1.11.1"),
 			EtcdVersion:       nil,
@@ -36,6 +38,7 @@ var (
 		{
 			Name:              strptr("test3"),
 			ID:                types.UUID("1234"),
+			Os:                strptr("centos"),
 			KubernetesMode:    strptr("master"),
 			KubernetesVersion: strptr("1.12.1"),
 			EtcdVersion:       &etcdVersion,

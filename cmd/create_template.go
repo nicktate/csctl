@@ -72,6 +72,8 @@ func init() {
 
 	// No defaulting is performed here because the logic in many cases is nontrivial,
 	// and we'd like to be consistent with where and how we default.
+	createTemplateCmd.PersistentFlags().StringVar(&createTemplateOpts.OperatingSystem, "os", "", "operating system (ubuntu or centos, default ubuntu)")
+
 	createTemplateCmd.PersistentFlags().Int32VarP(&createTemplateOpts.MasterCount, "master-count", "m", 0, "number of nodes in master node pool")
 	createTemplateCmd.PersistentFlags().Int32VarP(&createTemplateOpts.WorkerCount, "worker-count", "w", 0, "number of nodes in worker node pool")
 

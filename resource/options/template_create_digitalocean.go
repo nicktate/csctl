@@ -85,8 +85,14 @@ func (o *DigitalOceanTemplateCreate) digitalOceanDropletConfiguration() types.Di
 }
 
 func (o *DigitalOceanTemplateCreate) defaultAndValidateImage() error {
+	// Assumes o.TemplateCreate.DefaultAndValidate() already called
 	if o.Image == "" {
-		o.Image = "ubuntu-16-04-x64"
+		switch o.OperatingSystem {
+		case "ubuntu":
+			o.Image = "ubuntu-16-04-x64"
+		case "centos":
+			o.Image = "centos-7-x64"
+		}
 	}
 
 	return nil

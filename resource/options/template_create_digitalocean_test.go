@@ -18,6 +18,9 @@ func TestDODefaultAndValidate(t *testing.T) {
 
 func TestDOTemplate(t *testing.T) {
 	var opts = DigitalOceanTemplateCreate{
+		TemplateCreate: TemplateCreate{
+			OperatingSystem: "ubuntu",
+		},
 		Image:        "ubuntu-16-04-x64",
 		Region:       "nyc2",
 		InstanceSize: "s-2vcpu-2gb",
@@ -30,22 +33,33 @@ func TestDOTemplate(t *testing.T) {
 }
 
 func TestDefaultAndValidateImage(t *testing.T) {
-	var opts = DigitalOceanTemplateCreate{}
+	opts := getBaseOptions(t)
+
 	err := opts.defaultAndValidateImage()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.Image, "image set")
 }
 
 func TestDefaultAndValidateRegion(t *testing.T) {
-	var opts = DigitalOceanTemplateCreate{}
+	opts := getBaseOptions(t)
+
 	err := opts.defaultAndValidateRegion()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.Region, "region set")
 }
 
 func TestDefaultAndValidateInstanceSize(t *testing.T) {
-	var opts = DigitalOceanTemplateCreate{}
+	opts := getBaseOptions(t)
+
 	err := opts.defaultAndValidateInstanceSize()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.InstanceSize, "instance size set")
+}
+
+// get a new DO options struct with parent options already defaulted
+func getBaseOptions(t *testing.T) *DigitalOceanTemplateCreate {
+	var opts = DigitalOceanTemplateCreate{}
+	err := opts.TemplateCreate.DefaultAndValidate()
+	assert.NoError(t, err, "default and validate parent options")
+	return &opts
 }

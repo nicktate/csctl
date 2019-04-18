@@ -46,6 +46,11 @@ type TemplateNodePool struct {
 	// Required: true
 	Name *string `json:"name"`
 
+	// Operating System
+	// Required: true
+	// Enum: [centos rhel ubuntu]
+	Os *string `json:"os"`
+
 	// Type of this resource (always node_pool)
 	// Required: true
 	// Enum: [node_pool]
@@ -69,6 +74,10 @@ func (m *TemplateNodePool) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOs(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -150,6 +159,52 @@ func (m *TemplateNodePool) validateKubernetesVersion(formats strfmt.Registry) er
 func (m *TemplateNodePool) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var templateNodePoolTypeOsPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["centos","rhel","ubuntu"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		templateNodePoolTypeOsPropEnum = append(templateNodePoolTypeOsPropEnum, v)
+	}
+}
+
+const (
+
+	// TemplateNodePoolOsCentos captures enum value "centos"
+	TemplateNodePoolOsCentos string = "centos"
+
+	// TemplateNodePoolOsRhel captures enum value "rhel"
+	TemplateNodePoolOsRhel string = "rhel"
+
+	// TemplateNodePoolOsUbuntu captures enum value "ubuntu"
+	TemplateNodePoolOsUbuntu string = "ubuntu"
+)
+
+// prop value enum
+func (m *TemplateNodePool) validateOsEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, templateNodePoolTypeOsPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *TemplateNodePool) validateOs(formats strfmt.Registry) error {
+
+	if err := validate.Required("os", "body", m.Os); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateOsEnum("os", "body", *m.Os); err != nil {
 		return err
 	}
 

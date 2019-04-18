@@ -1599,14 +1599,12 @@ definitions:
       - name
       - type
       - count
+      - os
       - kubernetes_mode
       - kubernetes_version
     properties:
       name:
         description: Name of this node pool
-        type: string
-      type:
-        description: Resource type (always node_pool)
         type: string
       type:
         description: Type of this resource (always node_pool)
@@ -1617,6 +1615,10 @@ definitions:
         type: integer
         format: int32
         minimum: 1
+      os:
+        description: Operating System
+        type: string
+        enum: [centos, rhel, ubuntu]
       kubernetes_mode:
         description: Kubernetes mode of this node pool (master or worker)
         type: string

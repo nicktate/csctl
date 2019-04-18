@@ -10,6 +10,8 @@ import (
 // TemplateCreate is the set of options required to create a template
 type TemplateCreate struct {
 	// Defaultable
+	OperatingSystem string
+
 	MasterCount int32
 	WorkerCount int32
 
@@ -37,6 +39,10 @@ type TemplateCreate struct {
 
 // DefaultAndValidate defaults and validates all options
 func (o *TemplateCreate) DefaultAndValidate() error {
+	if err := o.defaultAndValidateOperatingSystem(); err != nil {
+		return errors.Wrap(err, "operating system")
+	}
+
 	if err := o.defaultAndValidateMasterCount(); err != nil {
 		return errors.Wrap(err, "master count")
 	}
@@ -82,6 +88,7 @@ func (o *TemplateCreate) NodePoolVariableMap() types.TemplateVariableMap {
 	return types.TemplateVariableMap{
 		o.MasterNodePoolName: types.TemplateVariableDefault{
 			Default: &types.TemplateNodePool{
+				Os:                &o.OperatingSystem,
 				Count:             &o.MasterCount,
 				KubernetesMode:    &o.masterMode,
 				KubernetesVersion: &o.MasterKubernetesVersion,
@@ -95,6 +102,7 @@ func (o *TemplateCreate) NodePoolVariableMap() types.TemplateVariableMap {
 		},
 		o.WorkerNodePoolName: types.TemplateVariableDefault{
 			Default: &types.TemplateNodePool{
+				Os:                &o.OperatingSystem,
 				Count:             &o.WorkerCount,
 				KubernetesMode:    &o.workerMode,
 				KubernetesVersion: &o.WorkerKubernetesVersion,
@@ -104,6 +112,13 @@ func (o *TemplateCreate) NodePoolVariableMap() types.TemplateVariableMap {
 			},
 		},
 	}
+}
+
+func (o *TemplateCreate) defaultAndValidateOperatingSystem() error {
+	if o.OperatingSystem == "" {
+		o.OperatingSystem = "ubuntu"
+	}
+	return nil
 }
 
 func (o *TemplateCreate) defaultAndValidateMasterCount() error {

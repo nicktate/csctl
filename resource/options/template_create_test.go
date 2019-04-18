@@ -23,6 +23,7 @@ func TestTemplateCreateDefaultAndValidate(t *testing.T) {
 
 func TestNodePoolVariableMap(t *testing.T) {
 	var opts = TemplateCreate{
+		OperatingSystem:         "ubuntu",
 		MasterCount:             3,
 		WorkerCount:             5,
 		MasterKubernetesVersion: "1.11.1",
@@ -36,6 +37,13 @@ func TestNodePoolVariableMap(t *testing.T) {
 	assert.Nil(t, m.Validate(nil), "valid node pool map created")
 	// TODO support multiple node pools, don't hardcode
 	assert.Len(t, m, 2, "correct number of node pools")
+}
+
+func TestDefaultAndValidateOperatingSystem(t *testing.T) {
+	var opts = TemplateCreate{}
+	err := opts.defaultAndValidateOperatingSystem()
+	assert.Nil(t, err)
+	assert.NotEmpty(t, opts.OperatingSystem, "default to non-empty string")
 }
 
 func TestDefaultAndValidateMasterCount(t *testing.T) {
