@@ -35,6 +35,7 @@ func (p *NodePools) columns() []string {
 	return []string{
 		"Name",
 		"ID",
+		"OS",
 		"Mode",
 		"Status",
 		"Kubernetes Version",
@@ -66,6 +67,7 @@ func (p *NodePools) Table(w io.Writer) error {
 		table.Append([]string{
 			*np.Name,
 			string(np.ID),
+			*np.Os,
 			*np.KubernetesMode,
 			status,
 			*np.KubernetesVersion,
