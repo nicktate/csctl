@@ -48,4 +48,10 @@ func init() {
 	createClusterCmd.AddCommand(createClusterDigitalOceanCmd)
 
 	bindCommandToOrganizationScope(createClusterDigitalOceanCmd, false)
+
+	// These are defined in the parent command, but they aren't required there
+	createClusterDigitalOceanCmd.MarkPersistentFlagRequired("template")
+	createClusterDigitalOceanCmd.MarkPersistentFlagRequired("provider")
+	createClusterDigitalOceanCmd.MarkPersistentFlagRequired("name")
+	createClusterDigitalOceanCmd.MarkPersistentFlagRequired("environment")
 }
