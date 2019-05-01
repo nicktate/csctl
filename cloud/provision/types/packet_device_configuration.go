@@ -6,6 +6,8 @@ package types
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -21,6 +23,10 @@ type PacketDeviceConfiguration struct {
 	// Required: true
 	Facility *string `json:"facility"`
 
+	// OS for this packet device
+	// Enum: [centos_7 rhel_7 ubuntu_16_04]
+	OperatingSystem string `json:"operating_system,omitempty"`
+
 	// Plan for this packet device
 	// Required: true
 	Plan *string `json:"plan"`
@@ -35,6 +41,10 @@ func (m *PacketDeviceConfiguration) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateFacility(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOperatingSystem(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -55,6 +65,52 @@ func (m *PacketDeviceConfiguration) Validate(formats strfmt.Registry) error {
 func (m *PacketDeviceConfiguration) validateFacility(formats strfmt.Registry) error {
 
 	if err := validate.Required("facility", "body", m.Facility); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var packetDeviceConfigurationTypeOperatingSystemPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["centos_7","rhel_7","ubuntu_16_04"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		packetDeviceConfigurationTypeOperatingSystemPropEnum = append(packetDeviceConfigurationTypeOperatingSystemPropEnum, v)
+	}
+}
+
+const (
+
+	// PacketDeviceConfigurationOperatingSystemCentos7 captures enum value "centos_7"
+	PacketDeviceConfigurationOperatingSystemCentos7 string = "centos_7"
+
+	// PacketDeviceConfigurationOperatingSystemRhel7 captures enum value "rhel_7"
+	PacketDeviceConfigurationOperatingSystemRhel7 string = "rhel_7"
+
+	// PacketDeviceConfigurationOperatingSystemUbuntu1604 captures enum value "ubuntu_16_04"
+	PacketDeviceConfigurationOperatingSystemUbuntu1604 string = "ubuntu_16_04"
+)
+
+// prop value enum
+func (m *PacketDeviceConfiguration) validateOperatingSystemEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, packetDeviceConfigurationTypeOperatingSystemPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *PacketDeviceConfiguration) validateOperatingSystem(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OperatingSystem) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateOperatingSystemEnum("operating_system", "body", m.OperatingSystem); err != nil {
 		return err
 	}
 

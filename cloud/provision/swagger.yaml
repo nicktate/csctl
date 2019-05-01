@@ -1549,6 +1549,10 @@ definitions:
       plan:
         description: Plan for this packet device
         type: string
+      operating_system:
+        description: OS for this packet device
+        type: string
+        enum: [centos_7, rhel_7, ubuntu_16_04]
 
   TemplateVariableMap:
     description: Map of variable resource name to object
