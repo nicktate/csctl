@@ -53,5 +53,5 @@ func init() {
 	bindCommandToNodePoolScope(upgradeNodePoolCmd, false)
 
 	upgradeNodePoolCmd.Flags().StringVar(&kubernetesVersion, "kubernetes-version", "", "Kubernetes version to upgrade to")
-	upgradeNodePoolCmd.MarkFlagRequired("kubernetes-version")
+	_ = upgradeNodePoolCmd.MarkFlagRequired("kubernetes-version")
 }

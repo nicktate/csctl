@@ -46,7 +46,7 @@ var (
 					Threshold:          float32ptr(0.8),
 				},
 				ScaleDown: &types.ScalingPolicyConfiguration{
-					AdjustmentType:     strptr("aboslute"),
+					AdjustmentType:     strptr("absolute"),
 					AdjustmentValue:    float32ptr(2),
 					ComparisonOperator: strptr("<="),
 					Threshold:          float32ptr(0.2),

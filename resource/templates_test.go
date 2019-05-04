@@ -38,13 +38,6 @@ var (
 		Configuration: &tmplConfig,
 	}
 
-	tmplNoConfig = types.Template{
-		ID:           types.UUID("1234"),
-		ProviderName: strptr("digital_ocean"),
-		OwnerID:      types.UUID("1234"),
-		CreatedAt:    &tmplTime,
-	}
-
 	tmpls = []types.Template{
 		tmplGood,
 		{
@@ -176,13 +169,10 @@ func TestFilterByEngine(t *testing.T) {
 }
 
 func TestGetMasterKubernetesVersion(t *testing.T) {
-	v, err := getMasterKubernetesVersion(nil)
-	assert.Error(t, err, "get master version of nil template")
-
-	v, err = getMasterKubernetesVersion(&types.Template{})
+	_, err := getMasterKubernetesVersion(types.Template{})
 	assert.Error(t, err, "get master version of empty template")
 
-	v, err = getMasterKubernetesVersion(&tmplGood)
+	v, err := getMasterKubernetesVersion(tmplGood)
 	assert.Nil(t, err)
 	assert.Equal(t, v, tmplK8sVersion)
 }

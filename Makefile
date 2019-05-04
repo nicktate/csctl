@@ -33,6 +33,13 @@ docker: ## Build the Docker image
 		--build-arg GIT_DESCRIBE=${GIT_DESCRIBE} \
 		--build-arg GIT_COMMIT=${GIT_COMMIT} \
 
+.PHONY: check
+check: fmt-check golangci test ## Run all checkers and tests
+
+.PHONY: golangci
+golangci: ## Run GolangCI checks
+	@golangci-lint run
+
 .PHONY: fmt-check
 fmt-check: ## Check the file format
 	@gofmt -s -e -d $(GO_FILES) | read; \
@@ -41,14 +48,6 @@ fmt-check: ## Check the file format
 			gofmt -s -e -d $(GO_FILES); \
 			exit 1; \
 		fi
-
-.PHONY: lint
-lint: ## Lint the files
-	@golint -set_exit_status ${PKG_LIST}
-
-.PHONY: vet
-vet: ## Vet the files
-	@go vet ${PKG_LIST}
 
 .PHONY: test
 test: ## Run unit tests

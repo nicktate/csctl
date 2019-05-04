@@ -94,7 +94,7 @@ func init() {
 	createCmd.AddCommand(createClusterCmd)
 
 	createClusterCmd.Flags().StringVarP(&filename, "filename", "f", "", "create a cluster from the given file (TODO must be json for now)")
-	createClusterCmd.MarkFlagRequired("filename")
+	_ = createClusterCmd.MarkFlagRequired("filename")
 
 	createClusterCmd.PersistentFlags().StringVarP(&createClusterOpts.TemplateID, "template", "t", "", "template ID to create from")
 	createClusterCmd.PersistentFlags().StringVarP(&createClusterOpts.ProviderID, "provider", "p", "", "provider ID (credentials) to use for provisioning")

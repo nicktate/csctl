@@ -68,7 +68,7 @@ func init() {
 	createCmd.AddCommand(createTemplateCmd)
 
 	createTemplateCmd.Flags().StringVarP(&filename, "filename", "f", "", "create a template from the given file (TODO must be json for now)")
-	createTemplateCmd.MarkFlagRequired("filename")
+	_ = createTemplateCmd.MarkFlagRequired("filename")
 
 	// No defaulting is performed here because the logic in many cases is nontrivial,
 	// and we'd like to be consistent with where and how we default.

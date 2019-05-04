@@ -57,7 +57,7 @@ func (c *Templates) Table(w io.Writer) error {
 	table := table.New(w, c.columns())
 
 	for _, tmpl := range c.items {
-		masterVersion, err := getMasterKubernetesVersion(&tmpl)
+		masterVersion, err := getMasterKubernetesVersion(tmpl)
 		if err != nil {
 			return errors.Wrapf(err, "retrieving master version for template %q", string(tmpl.ID))
 		}
@@ -134,10 +134,7 @@ func (c *Templates) applyFilter(f filterFunc) {
 // for the given template, or an error
 // TODO the Template type is nasty to interact with due to how the API response
 // is structured. We should provide convenience functions in the official go client itself.
-func getMasterKubernetesVersion(t *types.Template) (string, error) {
-	if t == nil {
-		return "", errors.New("template is nil")
-	}
+func getMasterKubernetesVersion(t types.Template) (string, error) {
 	if t.Configuration == nil || t.Configuration.Variable == nil {
 		return "", errors.New("template configuration is nil")
 	}

@@ -13,6 +13,8 @@ type DigitalOceanClusterCreate struct {
 	ClusterCreate
 }
 
+const doPluginImplementation = "digitalocean"
+
 // DefaultAndValidate defaults and validates all options
 func (o *DigitalOceanClusterCreate) DefaultAndValidate() error {
 	if err := o.ClusterCreate.DefaultAndValidate(); err != nil {
@@ -79,13 +81,13 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCCM() error {
 		return nil
 	}
 
-	if impl != "" && impl != "digitalocean" {
+	if impl != "" && impl != doPluginImplementation {
 		return errors.New("only digitalocean CCM implementation is allowed")
 	}
-	impl = "digitalocean"
+	impl = doPluginImplementation
 
 	pType := "cloud_controller_manager"
-	o.ClusterCreate.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
+	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
 		Version:        version,
@@ -107,10 +109,10 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCSI() error {
 		return nil
 	}
 
-	if impl != "" && impl != "digitalocean" {
+	if impl != "" && impl != doPluginImplementation {
 		return errors.New("only digitalocean CCM implementation is allowed")
 	}
-	impl = "digitalocean"
+	impl = doPluginImplementation
 
 	pType := "csi"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{

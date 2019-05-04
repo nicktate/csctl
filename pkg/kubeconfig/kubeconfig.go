@@ -67,7 +67,7 @@ func Write(cfg *clientcmdv1.Config, w io.Writer) error {
 		return errors.Wrap(err, "intermediate parsing to JSON")
 	}
 
-	y, err := yaml.JSONToYAML([]byte(j))
+	y, err := yaml.JSONToYAML(j)
 	if err != nil {
 		return errors.Wrap(err, "converting to yaml")
 	}

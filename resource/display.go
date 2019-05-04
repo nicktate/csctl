@@ -38,7 +38,7 @@ func displayYAML(w io.Writer, data interface{}) error {
 		return errors.Wrap(err, "marshaling to JSON")
 	}
 
-	y, err := yaml.JSONToYAML([]byte(j))
+	y, err := yaml.JSONToYAML(j)
 	if err != nil {
 		return errors.Wrap(err, "converting JSON to YAML")
 	}

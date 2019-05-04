@@ -47,5 +47,5 @@ func init() {
 	bindCommandToClusterScope(upgradePluginCmd, false)
 
 	upgradePluginCmd.Flags().StringVarP(&version, "version", "v", "", "plugin version to upgrade to")
-	upgradePluginCmd.MarkFlagRequired("version")
+	_ = upgradePluginCmd.MarkFlagRequired("version")
 }

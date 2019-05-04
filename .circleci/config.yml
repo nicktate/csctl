@@ -5,19 +5,16 @@ jobs:
   test:
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/containership/csctl
     steps:
       - checkout
-      - run: go get -u golang.org/x/lint/golint
+      - run: go mod vendor
+      - run: go install -mod vendor "github.com/golangci/golangci-lint/cmd/golangci-lint"
       - run:
-          name: Format check
+          name: Format Check
           command: make fmt-check
       - run:
-          name: Lint
-          command: make lint
-      - run:
-          name: Vet
-          command: make vet
+          name: Lint and Static Analysis
+          command: make check
       - run:
           name: Test
           command: |
@@ -26,7 +23,6 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/containership/csctl
     steps:
       - checkout
       - setup_remote_docker
@@ -37,7 +33,6 @@ jobs:
   build-and-publish:
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/containership/csctl
     steps:
       - checkout
       - setup_remote_docker

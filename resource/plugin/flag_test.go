@@ -39,10 +39,10 @@ func TestParse(t *testing.T) {
 	assert.Equal(t, "", version)
 
 	f = Flag{Val: "calico@"}
-	impl, version, err = f.Parse()
+	_, _, err = f.Parse()
 	assert.Error(t, err, "@ but no semver")
 
 	f = Flag{Val: "calico@123asdf"}
-	impl, version, err = f.Parse()
+	_, _, err = f.Parse()
 	assert.Error(t, err, "invalid semver")
 }

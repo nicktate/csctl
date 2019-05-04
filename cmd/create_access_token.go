@@ -46,8 +46,8 @@ For more information on PATs, please see https://docs.containership.io/developer
 		}
 
 		fmt.Printf("Access token %s created successfully. Copy the token below as it will not be displayed again:\n%s\n",
-			string(*accessToken.Name),
-			string(accessToken.Token))
+			*accessToken.Name,
+			accessToken.Token)
 
 		return nil
 	},
