@@ -590,6 +590,23 @@ definitions:
     items:
       $ref: "#/definitions/NodePool"
 
+  NodePoolCreateRequest:
+    type: object
+
+
+  NodePoolDigitalOceanCreateRequest:
+    type: object
+    required:
+      - resource
+      - variable
+    properties:
+      resource:
+        title: Provider-specific cloud resources
+        $ref: '#/definitions/DigitalOceanDropletConfiguration'
+      variable:
+        title: Provider-agnostic parameters
+        $ref: '#/definitions/TemplateNodePool'
+
   NodePoolScaleRequest:
     type: object
     required:

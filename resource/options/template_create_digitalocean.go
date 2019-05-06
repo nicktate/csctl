@@ -11,18 +11,30 @@ import (
 type DigitalOceanTemplateCreate struct {
 	TemplateCreate
 
+	digitalOceanDroplet
+
+	// Not user-settable; always defaulted
+	providerName string
+}
+
+type digitalOceanDroplet struct {
 	// Defaultable
 	Image        string
 	Region       string
 	InstanceSize string
 
 	// Not user-settable; always defaulted
-	providerName string
-
 	backups           bool
 	monitoring        bool
 	privateNetworking bool
 }
+
+const (
+	digitalOceanDefaultRegion       = "nyc1"
+	digitalOceanDefaultInstanceSize = "s-2vcpu-2gb"
+	digitalOceanDefaultUbuntuImage  = "ubuntu-16-04-x64"
+	digitalOceanDefaultCentOSImage  = "centos-7-x64"
+)
 
 // DefaultAndValidate defaults and validates all options
 func (o *DigitalOceanTemplateCreate) DefaultAndValidate() error {
@@ -30,21 +42,9 @@ func (o *DigitalOceanTemplateCreate) DefaultAndValidate() error {
 		return errors.Wrap(err, "validating generic create options")
 	}
 
-	if err := o.defaultAndValidateImage(); err != nil {
-		return errors.Wrap(err, "validating image name")
+	if err := o.digitalOceanDroplet.defaultAndValidate(o.OperatingSystem); err != nil {
+		return errors.Wrap(err, "validating droplet options")
 	}
-
-	if err := o.defaultAndValidateRegion(); err != nil {
-		return errors.Wrap(err, "validating region")
-	}
-
-	if err := o.defaultAndValidateInstanceSize(); err != nil {
-		return errors.Wrap(err, "validating instance size")
-	}
-
-	o.backups = false
-	o.monitoring = false
-	o.privateNetworking = true
 
 	o.providerName = "digital_ocean"
 
@@ -84,31 +84,50 @@ func (o *DigitalOceanTemplateCreate) digitalOceanDropletConfiguration() types.Di
 	}
 }
 
-func (o *DigitalOceanTemplateCreate) defaultAndValidateImage() error {
-	// Assumes o.TemplateCreate.DefaultAndValidate() already called
+func (o *digitalOceanDroplet) defaultAndValidate(os string) error {
+	if err := o.defaultAndValidateImage(os); err != nil {
+		return errors.Wrap(err, "validating image name")
+	}
+
+	if err := o.defaultAndValidateRegion(); err != nil {
+		return errors.Wrap(err, "validating region")
+	}
+
+	if err := o.defaultAndValidateInstanceSize(); err != nil {
+		return errors.Wrap(err, "validating instance size")
+	}
+
+	o.backups = false
+	o.monitoring = false
+	o.privateNetworking = true
+
+	return nil
+}
+
+func (o *digitalOceanDroplet) defaultAndValidateImage(os string) error {
 	if o.Image == "" {
-		switch o.OperatingSystem {
+		switch os {
 		case "ubuntu":
-			o.Image = "ubuntu-16-04-x64"
+			o.Image = digitalOceanDefaultUbuntuImage
 		case "centos":
-			o.Image = "centos-7-x64"
+			o.Image = digitalOceanDefaultCentOSImage
 		}
 	}
 
 	return nil
 }
 
-func (o *DigitalOceanTemplateCreate) defaultAndValidateRegion() error {
+func (o *digitalOceanDroplet) defaultAndValidateRegion() error {
 	if o.Region == "" {
-		o.Region = "nyc1"
+		o.Region = digitalOceanDefaultRegion
 	}
 
 	return nil
 }
 
-func (o *DigitalOceanTemplateCreate) defaultAndValidateInstanceSize() error {
+func (o *digitalOceanDroplet) defaultAndValidateInstanceSize() error {
 	if o.InstanceSize == "" {
-		o.InstanceSize = "s-2vcpu-2gb"
+		o.InstanceSize = digitalOceanDefaultInstanceSize
 	}
 
 	return nil

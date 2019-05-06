@@ -14,7 +14,7 @@ type NodePoolsGetter interface {
 
 // NodePoolInterface is the interface for node pools
 type NodePoolInterface interface {
-	Create(*types.NodePool) (*types.NodePool, error)
+	Create(req *types.NodePoolDigitalOceanCreateRequest) (*types.NodePool, error)
 	Get(id string) (*types.NodePool, error)
 	Delete(id string) error
 	List() ([]types.NodePool, error)
@@ -38,9 +38,10 @@ func newNodePools(c *Client, organizationID, clusterID string) *nodePools {
 }
 
 // Create creates a node pool
-func (c *nodePools) Create(*types.NodePool) (*types.NodePool, error) {
-	// TODO
-	return nil, nil
+func (c *nodePools) Create(req *types.NodePoolDigitalOceanCreateRequest) (*types.NodePool, error) {
+	path := fmt.Sprintf("/v3/organizations/%s/clusters/%s/node-pools", c.organizationID, c.clusterID)
+	var out types.NodePool
+	return &out, c.client.Post(path, req, &out)
 }
 
 // Get gets a node pool

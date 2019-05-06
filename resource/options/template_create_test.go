@@ -98,9 +98,21 @@ func TestDefaultAndValidateKubernetesVersions(t *testing.T) {
 
 	opts = TemplateCreate{MasterKubernetesVersion: "1.10.1"}
 	err = opts.defaultAndValidateKubernetesVersions()
-	assert.Nil(t, err)
+	assert.Nil(t, err, "valid master semver")
 	assert.Equal(t, opts.MasterKubernetesVersion, opts.WorkerKubernetesVersion,
 		"default worker version to master version")
+
+	opts = TemplateCreate{WorkerKubernetesVersion: "1.13.4"}
+	err = opts.defaultAndValidateKubernetesVersions()
+	assert.Nil(t, err, "valid worker semver")
+
+	opts = TemplateCreate{MasterKubernetesVersion: "invalid"}
+	err = opts.defaultAndValidateKubernetesVersions()
+	assert.Error(t, err, "invalid master semver")
+
+	opts = TemplateCreate{WorkerKubernetesVersion: "invalid"}
+	err = opts.defaultAndValidateKubernetesVersions()
+	assert.Error(t, err, "invalid worker semver")
 }
 
 func TestDefaultAndValidateDescription(t *testing.T) {

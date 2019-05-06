@@ -21,21 +21,23 @@ func TestDOTemplate(t *testing.T) {
 		TemplateCreate: TemplateCreate{
 			OperatingSystem: "ubuntu",
 		},
-		Image:        "ubuntu-16-04-x64",
-		Region:       "nyc2",
-		InstanceSize: "s-2vcpu-2gb",
+		digitalOceanDroplet: digitalOceanDroplet{
+			Image:        "ubuntu-16-04-x64",
+			Region:       "nyc2",
+			InstanceSize: "s-2vcpu-2gb",
+		},
 	}
 	err := opts.DefaultAndValidate()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 
 	req := opts.CreateTemplateRequest()
 	assert.Nil(t, req.Validate(nil), "valid request created")
 }
 
-func TestDefaultAndValidateImage(t *testing.T) {
+func TestDefaultAndValidateDigitalOceanDroplet(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.defaultAndValidateImage()
+	err := opts.digitalOceanDroplet.defaultAndValidateImage(opts.OperatingSystem)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.Image, "image set")
 }
@@ -43,7 +45,7 @@ func TestDefaultAndValidateImage(t *testing.T) {
 func TestDefaultAndValidateRegion(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.defaultAndValidateRegion()
+	err := opts.digitalOceanDroplet.defaultAndValidateRegion()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.Region, "region set")
 }
@@ -51,7 +53,7 @@ func TestDefaultAndValidateRegion(t *testing.T) {
 func TestDefaultAndValidateInstanceSize(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.defaultAndValidateInstanceSize()
+	err := opts.digitalOceanDroplet.defaultAndValidateInstanceSize()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, opts.InstanceSize, "instance size set")
 }
