@@ -37,24 +37,21 @@ func TestDOTemplate(t *testing.T) {
 func TestDefaultAndValidateDigitalOceanDroplet(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.digitalOceanDroplet.defaultAndValidateImage(opts.OperatingSystem)
-	assert.Nil(t, err)
+	opts.digitalOceanDroplet.defaultAndValidateImage(opts.OperatingSystem)
 	assert.NotEmpty(t, opts.Image, "image set")
 }
 
 func TestDefaultAndValidateRegion(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.digitalOceanDroplet.defaultAndValidateRegion()
-	assert.Nil(t, err)
+	opts.digitalOceanDroplet.defaultAndValidateRegion()
 	assert.NotEmpty(t, opts.Region, "region set")
 }
 
 func TestDefaultAndValidateInstanceSize(t *testing.T) {
 	opts := getBaseOptions(t)
 
-	err := opts.digitalOceanDroplet.defaultAndValidateInstanceSize()
-	assert.Nil(t, err)
+	opts.digitalOceanDroplet.defaultAndValidateInstanceSize()
 	assert.NotEmpty(t, opts.InstanceSize, "instance size set")
 }
 

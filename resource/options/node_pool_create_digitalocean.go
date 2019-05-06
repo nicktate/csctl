@@ -19,9 +19,7 @@ func (o *DigitalOceanNodePoolCreate) DefaultAndValidate() error {
 		return errors.Wrap(err, "validating generic create options")
 	}
 
-	if err := o.digitalOceanDroplet.defaultAndValidate(o.OperatingSystem); err != nil {
-		return errors.Wrap(err, "validating droplet options")
-	}
+	o.digitalOceanDroplet.defaultAndValidate(o.OperatingSystem)
 
 	return nil
 }

@@ -42,9 +42,7 @@ func (o *DigitalOceanTemplateCreate) DefaultAndValidate() error {
 		return errors.Wrap(err, "validating generic create options")
 	}
 
-	if err := o.digitalOceanDroplet.defaultAndValidate(o.OperatingSystem); err != nil {
-		return errors.Wrap(err, "validating droplet options")
-	}
+	o.digitalOceanDroplet.defaultAndValidate(o.OperatingSystem)
 
 	o.providerName = "digital_ocean"
 
@@ -84,27 +82,18 @@ func (o *DigitalOceanTemplateCreate) digitalOceanDropletConfiguration() types.Di
 	}
 }
 
-func (o *digitalOceanDroplet) defaultAndValidate(os string) error {
-	if err := o.defaultAndValidateImage(os); err != nil {
-		return errors.Wrap(err, "validating image name")
-	}
-
-	if err := o.defaultAndValidateRegion(); err != nil {
-		return errors.Wrap(err, "validating region")
-	}
-
-	if err := o.defaultAndValidateInstanceSize(); err != nil {
-		return errors.Wrap(err, "validating instance size")
-	}
+// We delegate all validation to the cloud here for simplicity, so no error is returned
+func (o *digitalOceanDroplet) defaultAndValidate(os string) {
+	o.defaultAndValidateImage(os)
+	o.defaultAndValidateRegion()
+	o.defaultAndValidateInstanceSize()
 
 	o.backups = false
 	o.monitoring = false
 	o.privateNetworking = true
-
-	return nil
 }
 
-func (o *digitalOceanDroplet) defaultAndValidateImage(os string) error {
+func (o *digitalOceanDroplet) defaultAndValidateImage(os string) {
 	if o.Image == "" {
 		switch os {
 		case "ubuntu":
@@ -113,22 +102,16 @@ func (o *digitalOceanDroplet) defaultAndValidateImage(os string) error {
 			o.Image = digitalOceanDefaultCentOSImage
 		}
 	}
-
-	return nil
 }
 
-func (o *digitalOceanDroplet) defaultAndValidateRegion() error {
+func (o *digitalOceanDroplet) defaultAndValidateRegion() {
 	if o.Region == "" {
 		o.Region = digitalOceanDefaultRegion
 	}
-
-	return nil
 }
 
-func (o *digitalOceanDroplet) defaultAndValidateInstanceSize() error {
+func (o *digitalOceanDroplet) defaultAndValidateInstanceSize() {
 	if o.InstanceSize == "" {
 		o.InstanceSize = digitalOceanDefaultInstanceSize
 	}
-
-	return nil
 }
