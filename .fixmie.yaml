@@ -1,4 +1,0 @@
-go:
-  # see https://github.com/fixmie/docs#fixers
-  params:
-    disabled: true
