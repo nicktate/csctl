@@ -65,7 +65,7 @@ func (o *GoogleClusterCreate) defaultAndValidateCNI() error {
 	}
 	impl = googleCNI
 
-	pType := "cni"
+	pType := types.CreateCKEClusterPluginTypeCni
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -90,7 +90,7 @@ func (o *GoogleClusterCreate) defaultAndValidateCCM() error {
 	}
 	impl = googleCCM
 
-	pType := "cloud_controller_manager"
+	pType := types.CreateCKEClusterPluginTypeCloudControllerManager
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -115,7 +115,7 @@ func (o *GoogleClusterCreate) defaultAndValidateCSI() error {
 	}
 	impl = googleCSI
 
-	pType := "csi"
+	pType := types.CreateCKEClusterPluginTypeCsi
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,

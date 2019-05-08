@@ -60,7 +60,7 @@ func (o *AzureClusterCreate) defaultAndValidateCNI() error {
 	}
 	impl = azureCNI
 
-	pType := "cni"
+	pType := types.CreateCKEClusterPluginTypeCni
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -85,7 +85,7 @@ func (o *AzureClusterCreate) defaultAndValidateCCM() error {
 	}
 	impl = azureCCM
 
-	pType := "cloud_controller_manager"
+	pType := types.CreateCKEClusterPluginTypeCloudControllerManager
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,

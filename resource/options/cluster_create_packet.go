@@ -60,7 +60,7 @@ func (o *PacketClusterCreate) defaultAndValidateCNI() error {
 	}
 	impl = packetCNI
 
-	pType := "cni"
+	pType := types.CreateCKEClusterPluginTypeCni
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -85,7 +85,7 @@ func (o *PacketClusterCreate) defaultAndValidateCCM() error {
 	}
 	impl = packetCCM
 
-	pType := "cloud_controller_manager"
+	pType := types.CreateCKEClusterPluginTypeCloudControllerManager
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,

@@ -65,7 +65,7 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCNI() error {
 	}
 	impl = doCNI
 
-	pType := "cni"
+	pType := types.CreateCKEClusterPluginTypeCni
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -90,7 +90,7 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCCM() error {
 	}
 	impl = doCCM
 
-	pType := "cloud_controller_manager"
+	pType := types.CreateCKEClusterPluginTypeCloudControllerManager
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
@@ -115,7 +115,7 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCSI() error {
 	}
 	impl = doCSI
 
-	pType := "csi"
+	pType := types.CreateCKEClusterPluginTypeCsi
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
