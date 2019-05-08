@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	validClusterCreateOpts = ClusterCreate{
+	validDOClusterCreateOpts = ClusterCreate{
 		TemplateID:  validUUID,
 		ProviderID:  validUUID,
 		Name:        "name",
@@ -22,20 +22,20 @@ func TestDigitalOceanClusterCreateDefaultAndValidate(t *testing.T) {
 	err := emptyOpts.DefaultAndValidate()
 	assert.Error(t, err, "empty parent opts is not ok")
 
-	opts := DigitalOceanClusterCreate{ClusterCreate: validClusterCreateOpts}
+	opts := DigitalOceanClusterCreate{ClusterCreate: validDOClusterCreateOpts}
 
 	err = opts.DefaultAndValidate()
 	assert.NoError(t, err, "empty DO opts is ok")
 }
 
-func TestCreateCKEClusterRequest(t *testing.T) {
+func TestDigitalOceanCreateCKEClusterRequest(t *testing.T) {
 	emptyOpts := DigitalOceanClusterCreate{}
 	req := emptyOpts.CreateCKEClusterRequest()
 	assert.NotNil(t, req, "CKE cluster request is never nil")
 }
 
 func TestDigitalOceanDefaultAndValidateCNI(t *testing.T) {
-	opts := DigitalOceanClusterCreate{ClusterCreate: validClusterCreateOpts}
+	opts := DigitalOceanClusterCreate{ClusterCreate: validDOClusterCreateOpts}
 
 	err := opts.defaultAndValidateCNI()
 	assert.NoError(t, err, "empty CNI flag is ok")
@@ -50,7 +50,7 @@ func TestDigitalOceanDefaultAndValidateCNI(t *testing.T) {
 }
 
 func TestDigitalOceanDefaultAndValidateCCM(t *testing.T) {
-	opts := DigitalOceanClusterCreate{ClusterCreate: validClusterCreateOpts}
+	opts := DigitalOceanClusterCreate{ClusterCreate: validDOClusterCreateOpts}
 
 	err := opts.defaultAndValidateCCM()
 	assert.NoError(t, err, "empty CCM flag is ok")
@@ -65,7 +65,7 @@ func TestDigitalOceanDefaultAndValidateCCM(t *testing.T) {
 }
 
 func TestDigitalOceanDefaultAndValidateCSI(t *testing.T) {
-	opts := DigitalOceanClusterCreate{ClusterCreate: validClusterCreateOpts}
+	opts := DigitalOceanClusterCreate{ClusterCreate: validDOClusterCreateOpts}
 
 	err := opts.defaultAndValidateCSI()
 	assert.NoError(t, err, "empty CSI flag is ok")
