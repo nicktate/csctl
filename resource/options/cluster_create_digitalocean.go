@@ -13,7 +13,11 @@ type DigitalOceanClusterCreate struct {
 	ClusterCreate
 }
 
-const doPluginImplementation = "digitalocean"
+const (
+	doCNI = "calico"
+	doCCM = "digitalocean"
+	doCSI = "digitalocean"
+)
 
 // DefaultAndValidate defaults and validates all options
 func (o *DigitalOceanClusterCreate) DefaultAndValidate() error {
@@ -56,10 +60,10 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCNI() error {
 		return errors.Errorf("CNI plugin is required (can't specify an implementation of %q)", plugin.NoImplementation)
 	}
 
-	if impl != "" && impl != "calico" {
-		return errors.New("only calico CNI implementation is allowed")
+	if impl != "" && impl != doCNI {
+		return errors.Errorf("only %s CNI implementation is allowed", doCNI)
 	}
-	impl = "calico"
+	impl = doCNI
 
 	pType := "cni"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
@@ -81,19 +85,16 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCCM() error {
 		return nil
 	}
 
-	if impl != "" && impl != doPluginImplementation {
-		return errors.New("only digitalocean CCM implementation is allowed")
+	if impl != "" && impl != doCCM {
+		return errors.Errorf("only %s CCM implementation is allowed", doCCM)
 	}
-	impl = doPluginImplementation
+	impl = doCCM
 
 	pType := "cloud_controller_manager"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
 		Version:        version,
-		Configuration: map[string]string{
-			"provider_id": o.ProviderID,
-		},
 	})
 
 	return nil
@@ -109,19 +110,16 @@ func (o *DigitalOceanClusterCreate) defaultAndValidateCSI() error {
 		return nil
 	}
 
-	if impl != "" && impl != doPluginImplementation {
-		return errors.New("only digitalocean CCM implementation is allowed")
+	if impl != "" && impl != doCSI {
+		return errors.Errorf("only %s CSI implementation is allowed", doCSI)
 	}
-	impl = doPluginImplementation
+	impl = doCSI
 
 	pType := "csi"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,
 		Version:        version,
-		Configuration: map[string]string{
-			"provider_id": o.ProviderID,
-		},
 	})
 
 	return nil
