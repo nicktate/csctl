@@ -19,6 +19,7 @@ type ClusterCreate struct {
 	PluginMetricsFlag           plugin.Flag
 	PluginClusterManagementFlag plugin.Flag
 	PluginAutoscalerFlag        plugin.Flag
+	PluginAuditLogsFlag         plugin.Flag
 
 	// Flags with provider-specific validation
 	PluginCNIFlag plugin.Flag
@@ -60,6 +61,10 @@ func (o *ClusterCreate) DefaultAndValidate() error {
 
 	if err := o.defaultAndValidateAutoscaler(); err != nil {
 		return errors.Wrapf(err, "validating %s plugin", plugin.TypeAutoscaler)
+	}
+
+	if err := o.defaultAndValidateAuditLogs(); err != nil {
+		return errors.Wrapf(err, "validating %s plugin", plugin.TypeAuditLogs)
 	}
 
 	o.labels = map[string]string{
@@ -136,6 +141,31 @@ func (o *ClusterCreate) defaultAndValidateAutoscaler() error {
 	impl = "cerebral"
 
 	pType := "autoscaler"
+	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
+		Type:           &pType,
+		Implementation: &impl,
+		Version:        version,
+	})
+
+	return nil
+}
+
+func (o *ClusterCreate) defaultAndValidateAuditLogs() error {
+	impl, version, err := o.PluginAuditLogsFlag.Parse()
+	if err != nil {
+		return errors.Wrap(err, "parsing plugin flag")
+	}
+
+	if impl == plugin.NoImplementation {
+		return nil
+	}
+
+	if impl != "" && impl != "logstash" {
+		return errors.New("only logstash audit logs implementation is allowed")
+	}
+	impl = "logstash"
+
+	pType := "audit_logs"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,

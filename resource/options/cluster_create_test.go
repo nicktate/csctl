@@ -84,13 +84,28 @@ func TestDefaultAndValidateAutoscaler(t *testing.T) {
 	opts := ClusterCreate{}
 
 	err := opts.defaultAndValidateAutoscaler()
-	assert.NoError(t, err, "empty metrics flag is ok")
+	assert.NoError(t, err, "empty autoscaler flag is ok")
 
 	opts.PluginAutoscalerFlag = plugin.Flag{Val: "=invalid"}
 	err = opts.defaultAndValidateAutoscaler()
-	assert.Error(t, err, "invalid metrics plugin flag")
+	assert.Error(t, err, "invalid autoscaler plugin flag")
 
 	opts.PluginAutoscalerFlag = plugin.Flag{Val: "none"}
 	err = opts.defaultAndValidateAutoscaler()
-	assert.NoError(t, err, "disabling metrics is allowed")
+	assert.NoError(t, err, "disabling autoscaler is allowed")
+}
+
+func TestDefaultAndValidateAuditLogs(t *testing.T) {
+	opts := ClusterCreate{}
+
+	err := opts.defaultAndValidateAuditLogs()
+	assert.NoError(t, err, "empty audit logs flag is ok")
+
+	opts.PluginAuditLogsFlag = plugin.Flag{Val: "=invalid"}
+	err = opts.defaultAndValidateAuditLogs()
+	assert.Error(t, err, "invalid audit logs plugin flag")
+
+	opts.PluginAuditLogsFlag = plugin.Flag{Val: "none"}
+	err = opts.defaultAndValidateAuditLogs()
+	assert.NoError(t, err, "disabling audit logs is allowed")
 }

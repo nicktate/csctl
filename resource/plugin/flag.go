@@ -33,6 +33,8 @@ const (
 	TypeClusterManagement
 	// TypeAutoscaler is the Autoscaler plugin type
 	TypeAutoscaler
+	// TypeAuditLogs is the AuditLogs plugin type
+	TypeAuditLogs
 	// TypeMetrics is the Metrics plugin type
 	TypeMetrics
 	// TypeLogs is the Logs plugin type
@@ -46,6 +48,7 @@ func (p Type) String() string {
 		"Cloud Controller Manager (CCM)",
 		"Cluster Management",
 		"Autoscaler",
+		"Audit Logs",
 		"Metrics",
 		"Logs",
 	}
