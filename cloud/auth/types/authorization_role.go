@@ -6,6 +6,8 @@ package types
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -40,6 +42,9 @@ type AuthorizationRole struct {
 	// Required: true
 	OwnerID UUID `json:"owner_id"`
 
+	// List of authorization rules if rules are sideloaded
+	Rules []*AuthorizationRule `json:"rules"`
+
 	// Timestamp at which the role was updated
 	// Required: true
 	UpdatedAt *string `json:"updated_at"`
@@ -66,6 +71,10 @@ func (m *AuthorizationRole) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOwnerID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRules(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -128,6 +137,31 @@ func (m *AuthorizationRole) validateOwnerID(formats strfmt.Registry) error {
 			return ve.ValidateName("owner_id")
 		}
 		return err
+	}
+
+	return nil
+}
+
+func (m *AuthorizationRole) validateRules(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Rules) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Rules); i++ {
+		if swag.IsZero(m.Rules[i]) { // not required
+			continue
+		}
+
+		if m.Rules[i] != nil {
+			if err := m.Rules[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

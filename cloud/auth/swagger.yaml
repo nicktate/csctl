@@ -100,6 +100,11 @@ definitions:
       owner_id:
         title: Account ID of the role owner
         $ref: "#/definitions/UUID"
+      rules:
+        title: List of authorization rules if rules are sideloaded
+        type: array
+        items:
+          $ref: "#/definitions/AuthorizationRule"
 
   AuthorizationRule:
     required:
