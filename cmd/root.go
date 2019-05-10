@@ -96,6 +96,7 @@ func clientsetRequiredPreRunE(cmd *cobra.Command, _ []string) error {
 	clientset, err = cloud.New(cloud.Config{
 		Token:            userToken,
 		APIBaseURL:       viper.GetString("apiBaseURL"),
+		AuthBaseURL:      viper.GetString("authBaseURL"),
 		ProvisionBaseURL: viper.GetString("provisionBaseURL"),
 		DebugEnabled:     debugEnabled,
 	})

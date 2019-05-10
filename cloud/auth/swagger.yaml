@@ -70,6 +70,147 @@ definitions:
         title: Password to use for login
         type: string
 
+  AuthorizationRole:
+    required:
+      - created_at
+      - updated_at
+      - id
+      - organization_id
+      - name
+      - owner_id
+    properties:
+      created_at:
+        title: Timestamp at which the role was created
+        type: string
+      updated_at:
+        title: Timestamp at which the role was updated
+        type: string
+      id:
+        title: Role ID
+        $ref: "#/definitions/UUID"
+      organization_id:
+        title: Organization ID of the organization the role belongs to
+        $ref: "#/definitions/UUID"
+      name:
+        title: Name of the role
+        type: string
+      description:
+        title: Description of the role
+        type: string
+      owner_id:
+        title: Account ID of the role owner
+        $ref: "#/definitions/UUID"
+
+  AuthorizationRule:
+    required:
+      - created_at
+      - updated_at
+      - id
+      - organization_id
+      - name
+      - owner_id
+      - type
+      - resources
+      - resource_names
+      - verbs
+    properties:
+      created_at:
+        title: Timestamp at which the rule was created
+        type: string
+      updated_at:
+        title: Timestamp at which the rule was updated
+        type: string
+      id:
+        title: Role ID
+        $ref: "#/definitions/UUID"
+      organization_id:
+        title: Organization ID of the organization the rule belongs to
+        $ref: "#/definitions/UUID"
+      name:
+        title: Name of the rule
+        type: string
+      description:
+        title: Description of the rule
+        type: string
+      owner_id:
+        title: Account ID of the rule owner
+        $ref: "#/definitions/UUID"
+      type:
+        title: Type of this rule
+        type: string
+        enum: [containership, kubernetes]
+      api_groups:
+        title: API groups this rule applies to
+        type: array
+        items:
+          type: string
+      resources:
+        title: Resources this rule applies to
+        type: array
+        items:
+          type: string
+      resource_names:
+        title: Resource names this rule applies to
+        type: array
+        items:
+          type: string
+      verbs:
+        title: Verbs this rule applies to
+        type: array
+        items:
+          type: string
+
+  AuthorizationRoleBinding:
+    required:
+      - created_at
+      - updated_at
+      - id
+      - organization_id
+      - owner_id
+      - type
+      - authorization_role_id
+    properties:
+      created_at:
+        title: Timestamp at which the role was created
+        type: string
+      updated_at:
+        title: Timestamp at which the role was updated
+        type: string
+      id:
+        title: Role ID
+        $ref: "#/definitions/UUID"
+      organization_id:
+        title: Organization ID of the organization the role belongs to
+        $ref: "#/definitions/UUID"
+      owner_id:
+        title: Account ID of the role binding owner
+        $ref: "#/definitions/UUID"
+      type:
+        title: Type of role binding
+        type: string
+        enum: [UserBinding, TeamBinding]
+      user_id:
+        title: User ID this role binding applies to (required when kind is UserBinding, else forbidden)
+        $ref: "#/definitions/UUID"
+      team_id:
+        title: Team ID this role binding applies to (required when kind is TeamBinding, else forbidden)
+        $ref: "#/definitions/UUID"
+      authorization_role_id:
+        title: Authorization role ID this role binding applies to
+        $ref: "#/definitions/UUID"
+      cluster_id:
+        title: Cluster ID this role binding applies to
+        $ref: "#/definitions/UUID"
+      namespace:
+        title: Namespace this role binding applies to
+        type: string
+
+  UUID:
+    title: UUID
+    type: string
+    minLength: 36
+    maxLength: 36
+
   Error:
     required:
       - code

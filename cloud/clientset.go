@@ -63,8 +63,9 @@ func New(cfg Config) (*Clientset, error) {
 	}
 
 	auth, err := auth.New(rest.Config{
-		BaseURL: cfg.AuthBaseURL,
-		Token:   cfg.Token,
+		BaseURL:      cfg.AuthBaseURL,
+		Token:        cfg.Token,
+		DebugEnabled: cfg.DebugEnabled,
 	})
 	if err != nil {
 		return nil, errors.Wrap(err, "constructing auth client")
