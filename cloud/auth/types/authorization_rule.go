@@ -37,6 +37,9 @@ type AuthorizationRule struct {
 	// Required: true
 	Name *string `json:"name"`
 
+	// Set of partial URLs a user should have access to
+	NonResourceUrls []string `json:"non_resource_urls"`
+
 	// Organization ID of the organization the rule belongs to
 	// Required: true
 	OrganizationID UUID `json:"organization_id"`

@@ -164,6 +164,11 @@ definitions:
         type: array
         items:
           type: string
+      non_resource_urls:
+        title: Set of partial URLs a user should have access to
+        type: array
+        items:
+          type: string
 
   AuthorizationRoleBinding:
     required:
