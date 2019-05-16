@@ -18,6 +18,7 @@ type AuthorizationRoleBindingInterface interface {
 	Delete(id string) error
 	List() ([]types.AuthorizationRoleBinding, error)
 	ListForRole(roleID string) ([]types.AuthorizationRoleBinding, error)
+	ListForCluster(clusterID string) ([]types.AuthorizationRoleBinding, error)
 }
 
 // authorizationRoleBindings implements AuthorizationRoleBindingInterface
@@ -56,6 +57,14 @@ func (c *authorizationRoleBindings) List() ([]types.AuthorizationRoleBinding, er
 // ListForRole lists all authorization role bindings for a specific role
 func (c *authorizationRoleBindings) ListForRole(roleID string) ([]types.AuthorizationRoleBinding, error) {
 	path := fmt.Sprintf("/v3/organizations/%s/roles/%s/role-bindings", c.organizationID, roleID)
+	out := make([]types.AuthorizationRoleBinding, 0)
+	return out, c.client.Get(path, &out)
+}
+
+// ListForCluster lists all authorization role bindings for a specific cluster
+// TODO don't hardcode query params - use e.g. builder pattern
+func (c *authorizationRoleBindings) ListForCluster(clusterID string) ([]types.AuthorizationRoleBinding, error) {
+	path := fmt.Sprintf("/v3/organizations/%s/role-bindings?cluster_id=%s", c.organizationID, clusterID)
 	out := make([]types.AuthorizationRoleBinding, 0)
 	return out, c.client.Get(path, &out)
 }
