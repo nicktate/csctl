@@ -29,6 +29,22 @@ var (
 		},
 	}
 
+	tmplConfigNilVersion = types.TemplateConfiguration{
+		Variable: types.TemplateVariableMap{
+			"np0": types.TemplateVariableDefault{
+				Default: &types.TemplateNodePool{
+					Count:             int32ptr(3),
+					Etcd:              true,
+					IsSchedulable:     true,
+					KubernetesMode:    strptr("master"),
+					KubernetesVersion: nil,
+					Name:              strptr("master-pool"),
+					Type:              strptr("node_pool"),
+				},
+			},
+		},
+	}
+
 	tmplGood = types.Template{
 		ID:            types.UUID("1234"),
 		ProviderName:  strptr("google"),
@@ -36,6 +52,15 @@ var (
 		OwnerID:       types.UUID("1234"),
 		CreatedAt:     &tmplTime,
 		Configuration: &tmplConfig,
+	}
+
+	tmplNilK8sVersion = types.Template{
+		ID:            types.UUID("1234"),
+		ProviderName:  strptr("google"),
+		Description:   strptr("my template"),
+		OwnerID:       types.UUID("1234"),
+		CreatedAt:     &tmplTime,
+		Configuration: &tmplConfigNilVersion,
 	}
 
 	tmpls = []types.Template{
@@ -171,6 +196,9 @@ func TestFilterByEngine(t *testing.T) {
 func TestGetMasterKubernetesVersion(t *testing.T) {
 	_, err := getMasterKubernetesVersion(types.Template{})
 	assert.Error(t, err, "get master version of empty template")
+
+	_, err = getMasterKubernetesVersion(tmplNilK8sVersion)
+	assert.Error(t, err, "get master version of template with nil k8s version")
 
 	v, err := getMasterKubernetesVersion(tmplGood)
 	assert.Nil(t, err)

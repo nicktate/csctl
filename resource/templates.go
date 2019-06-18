@@ -140,7 +140,7 @@ func getMasterKubernetesVersion(t types.Template) (string, error) {
 	}
 
 	for _, np := range t.Configuration.Variable {
-		if np.Default.KubernetesMode != nil &&
+		if np.Default.KubernetesMode != nil && np.Default.KubernetesVersion != nil &&
 			*np.Default.KubernetesMode == types.NodePoolKubernetesModeMaster {
 			return *np.Default.KubernetesVersion, nil
 		}
