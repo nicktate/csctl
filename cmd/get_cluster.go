@@ -34,13 +34,8 @@ var getClusterCmd = &cobra.Command{
 
 		clusters := resource.NewCKEClusters(resp)
 
-		if mineOnly {
-			me, err := getMyAccountID()
-			if err != nil {
-				return err
-			}
-
-			clusters.FilterByOwnerID(me)
+		if ownerID != "" {
+			clusters.FilterByOwnerID(ownerID)
 		}
 
 		outputResponse(clusters, len(args) != 1)

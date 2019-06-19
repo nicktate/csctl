@@ -14,6 +14,7 @@ import (
 // Flags
 var (
 	outputFormat string
+	ownerID      string
 	mineOnly     bool
 )
 
@@ -58,12 +59,35 @@ func getMyAccountID() (string, error) {
 	return string(me.ID), nil
 }
 
+func getPreRunE(cmd *cobra.Command, args []string) error {
+	err := clientsetRequiredPreRunE(cmd, args)
+
+	if err != nil {
+		return err
+	}
+
+	if mineOnly && ownerID != "" {
+		return errors.New("you may not specify both --mine and --owner-id simultaneously")
+	}
+
+	if mineOnly {
+		me, err := getMyAccountID()
+		if err != nil {
+			return err
+		}
+
+		ownerID = me
+	}
+
+	return nil
+}
+
 // getCmd represents the get command
 var getCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get a resource",
 
-	PersistentPreRunE: clientsetRequiredPreRunE,
+	PersistentPreRunE: getPreRunE,
 }
 
 func init() {
@@ -72,5 +96,6 @@ func init() {
 	requireClientset(getCmd)
 
 	getCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "", "output format")
+	getCmd.PersistentFlags().StringVar(&ownerID, "owner-id", "", "only list resources owned by the given owner-id")
 	getCmd.PersistentFlags().BoolVarP(&mineOnly, "mine", "m", false, "only list resources your user owns")
 }

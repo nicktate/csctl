@@ -34,13 +34,8 @@ var getTemplateCmd = &cobra.Command{
 
 		templates := resource.NewTemplates(resp)
 
-		if mineOnly {
-			me, err := getMyAccountID()
-			if err != nil {
-				return err
-			}
-
-			templates.FilterByOwnerID(me)
+		if ownerID != "" {
+			templates.FilterByOwnerID(ownerID)
 		}
 
 		// Non-CKE is deprecated. TODO consider filtering even earlier
