@@ -32,13 +32,8 @@ var getOrganizationCmd = &cobra.Command{
 
 		orgs := resource.NewOrganizations(resp)
 
-		if mineOnly {
-			me, err := getMyAccountID()
-			if err != nil {
-				return err
-			}
-
-			orgs.FilterByOwnerID(me)
+		if ownerID != "" {
+			orgs.FilterByOwnerID(ownerID)
 		}
 
 		outputResponse(orgs, len(args) != 1)

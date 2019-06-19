@@ -34,13 +34,8 @@ var getRoleCmd = &cobra.Command{
 
 		roles := resource.NewAuthorizationRoles(resp)
 
-		if mineOnly {
-			me, err := getMyAccountID()
-			if err != nil {
-				return err
-			}
-
-			roles.FilterByOwnerID(me)
+		if ownerID != "" {
+			roles.FilterByOwnerID(ownerID)
 		}
 
 		outputResponse(roles, len(args) != 1)
