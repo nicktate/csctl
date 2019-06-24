@@ -119,4 +119,6 @@ func init() {
 		"Cluster Management plugin (implementation must be \"containership\")")
 	createClusterCmd.PersistentFlags().StringVar(&createClusterOpts.PluginAutoscalerFlag.Val, "plugin-autoscaler", "",
 		"autoscaler plugin")
+	createClusterCmd.PersistentFlags().StringVar(&createClusterOpts.PluginAuditLogsFlag.Val, "plugin-audit-logs", "",
+		fmt.Sprintf("audit logs plugin (specify %q to disable)", plugin.NoImplementation))
 }
