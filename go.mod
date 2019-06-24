@@ -14,6 +14,7 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golangci/golangci-lint v1.16.0
 	github.com/google/gofuzz v1.0.0 // indirect
+	github.com/imdario/mergo v0.3.7 // indirect
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/json-iterator/go v1.1.6 // indirect
 	github.com/mitchellh/go-homedir v1.0.0
@@ -25,7 +26,9 @@ require (
 	github.com/spf13/viper v1.2.1
 	github.com/stretchr/testify v1.2.2
 	golang.org/x/net v0.0.0-20190403144856-b630fd6fe46b // indirect
+	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a // indirect
 	golang.org/x/sys v0.0.0-20190403152447-81d4e9dc473e // indirect
+	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/resty.v1 v1.12.0
 	k8s.io/apimachinery v0.0.0-20181015213631-60666be32c5d // indirect
