@@ -14,6 +14,11 @@ import (
 	"github.com/containership/csctl/resource/plugin"
 )
 
+// Flags
+var (
+	filename string
+)
+
 var createClusterOpts options.ClusterCreate
 
 // createClusterCmd represents the createCluster command

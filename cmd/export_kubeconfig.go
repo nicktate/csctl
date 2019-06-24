@@ -10,11 +10,6 @@ import (
 	"github.com/containership/csctl/pkg/kubeconfig"
 )
 
-// Flags
-var (
-	filename string
-)
-
 // exportKubeconfigCmd represents the export command
 var exportKubeconfigCmd = &cobra.Command{
 	Use:     "kubeconfig",
@@ -33,18 +28,6 @@ Example using merged default config:
 
 	# Interact with cluster using kubectl
 	kubectl get pods --all-namespaces
-
-To output to a file instead, use --filename (-f).
-In this case, the KUBECONFIG environment variable is ignored and merging is _not_ performed.
-This will simply write a new config file with only the configuration for the specified cluster.
-
-Example of using a file:
-
-	# Export Kubeconfig for a CKE cluster
-	csctl export kubeconfig --cluster <cluster_id> --filename admin.conf
-
-	# Interact with cluster using kubectl
-	kubectl --kubeconfig admin.conf get pods --all-namespaces
 `,
 
 	Args: cobra.NoArgs,
@@ -75,13 +58,7 @@ Example of using a file:
 			Token:         userToken,
 		}
 
-		if filename != "" {
-			err = kubeconfig.WriteToFile(cfg, filename)
-		} else {
-			err = kubeconfig.WriteMergedDefaultConfig(cfg)
-		}
-
-		return err
+		return kubeconfig.WriteMergedDefaultConfig(cfg)
 	},
 }
 
@@ -90,6 +67,4 @@ func init() {
 
 	requireClientset(exportKubeconfigCmd)
 	bindCommandToClusterScope(exportKubeconfigCmd, false)
-
-	exportKubeconfigCmd.Flags().StringVarP(&filename, "filename", "f", "", "output kubeconfig to file instead of merging into file specified by KUBECONFIG")
 }

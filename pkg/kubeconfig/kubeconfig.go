@@ -30,17 +30,6 @@ func WriteMergedDefaultConfig(cfg Config) error {
 	return clientcmd.ModifyConfig(pathOptions, *kubeconfig, false)
 }
 
-// WriteToFile writes a kubeconfig to the given file
-func WriteToFile(cfg Config, filename string) error {
-	kubeconfig := clientcmdapi.Config{
-		Clusters:  map[string]*clientcmdapi.Cluster{},
-		AuthInfos: map[string]*clientcmdapi.AuthInfo{},
-		Contexts:  map[string]*clientcmdapi.Context{},
-	}
-	addContainershipConfigAndSetContext(&kubeconfig, cfg)
-	return clientcmd.WriteToFile(kubeconfig, filename)
-}
-
 // Add a new Kubeconfig to the given starting config for the given Containership config.
 // Overwrites any existing Kubeconfig info for the given cluster.
 func addContainershipConfigAndSetContext(kubeconfig *clientcmdapi.Config, csConfig Config) {
