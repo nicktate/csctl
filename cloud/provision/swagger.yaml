@@ -1656,3 +1656,6 @@ definitions:
       is_schedulable:
         description: true if this node pool is schedulable, else false (required if kubernetes_mode == master)
         type: boolean
+      gpu:
+        description: true if this is a GPU node pool, else false
+        type: boolean
