@@ -109,3 +109,22 @@ func TestDefaultAndValidateAuditLogs(t *testing.T) {
 	err = opts.defaultAndValidateAuditLogs()
 	assert.NoError(t, err, "disabling audit logs is allowed")
 }
+
+func TestDefaultAndValidateGPUDevice(t *testing.T) {
+	opts := ClusterCreate{}
+
+	err := opts.defaultAndValidateGPUDevice()
+	assert.NoError(t, err, "empty gpu device flag is ok")
+
+	opts.PluginGPUDeviceFlag = plugin.Flag{Val: "=invalid"}
+	err = opts.defaultAndValidateGPUDevice()
+	assert.Error(t, err, "invalid gpu device plugin flag")
+
+	opts.PluginGPUDeviceFlag = plugin.Flag{Val: "none"}
+	err = opts.defaultAndValidateGPUDevice()
+	assert.NoError(t, err, "disabling gpu device is allowed")
+
+	opts.PluginGPUDeviceFlag = plugin.Flag{Val: "nvidia"}
+	err = opts.defaultAndValidateGPUDevice()
+	assert.NoError(t, err, "nvidia gpu device is allowed")
+}

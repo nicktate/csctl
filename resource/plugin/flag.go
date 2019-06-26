@@ -39,6 +39,8 @@ const (
 	TypeMetrics
 	// TypeLogs is the Logs plugin type
 	TypeLogs
+	// TypeGPUDevice is the GPUDevice plugin type
+	TypeGPUDevice
 )
 
 func (p Type) String() string {
@@ -51,6 +53,7 @@ func (p Type) String() string {
 		"Audit Logs",
 		"Metrics",
 		"Logs",
+		"GPU Device",
 	}
 
 	if p < TypeCNI || p > TypeLogs {

@@ -20,6 +20,7 @@ type ClusterCreate struct {
 	PluginClusterManagementFlag plugin.Flag
 	PluginAutoscalerFlag        plugin.Flag
 	PluginAuditLogsFlag         plugin.Flag
+	PluginGPUDeviceFlag         plugin.Flag
 
 	// Flags with provider-specific validation
 	PluginCNIFlag plugin.Flag
@@ -65,6 +66,10 @@ func (o *ClusterCreate) DefaultAndValidate() error {
 
 	if err := o.defaultAndValidateAuditLogs(); err != nil {
 		return errors.Wrapf(err, "validating %s plugin", plugin.TypeAuditLogs)
+	}
+
+	if err := o.defaultAndValidateGPUDevice(); err != nil {
+		return errors.Wrapf(err, "validating %s plugin", plugin.TypeGPUDevice)
 	}
 
 	o.labels = map[string]string{
@@ -166,6 +171,31 @@ func (o *ClusterCreate) defaultAndValidateAuditLogs() error {
 	impl = "logstash"
 
 	pType := "audit_logs"
+	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
+		Type:           &pType,
+		Implementation: &impl,
+		Version:        version,
+	})
+
+	return nil
+}
+
+func (o *ClusterCreate) defaultAndValidateGPUDevice() error {
+	impl, version, err := o.PluginGPUDeviceFlag.Parse()
+	if err != nil {
+		return errors.Wrap(err, "parsing plugin flag")
+	}
+
+	if impl == plugin.NoImplementation {
+		return nil
+	}
+
+	if impl != "" && impl != "nvidia" {
+		return errors.New("only nvidia gpu device implementation is allowed")
+	}
+	impl = "nvidia"
+
+	pType := "gpu_device"
 	o.plugins = append(o.plugins, &types.CreateCKEClusterPlugin{
 		Type:           &pType,
 		Implementation: &impl,

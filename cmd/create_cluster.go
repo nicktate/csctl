@@ -121,4 +121,6 @@ func init() {
 		"autoscaler plugin")
 	createClusterCmd.PersistentFlags().StringVar(&createClusterOpts.PluginAuditLogsFlag.Val, "plugin-audit-logs", "",
 		fmt.Sprintf("audit logs plugin (specify %q to disable)", plugin.NoImplementation))
+	createClusterCmd.PersistentFlags().StringVar(&createClusterOpts.PluginGPUDeviceFlag.Val, "plugin-gpu-device", "",
+		fmt.Sprintf("gpu device plugin (specify %q to disable)", plugin.NoImplementation))
 }
