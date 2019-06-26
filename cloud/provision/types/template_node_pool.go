@@ -30,6 +30,9 @@ type TemplateNodePool struct {
 	// true if etcd runs on this node pool, else false (required if kubernetes_mode == master)
 	Etcd bool `json:"etcd,omitempty"`
 
+	// true if this is a GPU node pool, else false
+	Gpu bool `json:"gpu,omitempty"`
+
 	// true if this node pool is schedulable, else false (required if kubernetes_mode == master)
 	IsSchedulable bool `json:"is_schedulable,omitempty"`
 
