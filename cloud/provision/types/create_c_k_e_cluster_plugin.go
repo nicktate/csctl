@@ -28,7 +28,7 @@ type CreateCKEClusterPlugin struct {
 
 	// Plugin type
 	// Required: true
-	// Enum: [cluster_management metrics logs cni csi cloud_controller_manager autoscaler gpu]
+	// Enum: [cluster_management metrics logs cni csi cloud_controller_manager autoscaler gpu_device audit_logs]
 	Type *string `json:"type"`
 
 	// Plugin version
@@ -66,7 +66,7 @@ var createCKEClusterPluginTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["cluster_management","metrics","logs","cni","csi","cloud_controller_manager","autoscaler","gpu"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["cluster_management","metrics","logs","cni","csi","cloud_controller_manager","autoscaler","gpu_device","audit_logs"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -97,8 +97,11 @@ const (
 	// CreateCKEClusterPluginTypeAutoscaler captures enum value "autoscaler"
 	CreateCKEClusterPluginTypeAutoscaler string = "autoscaler"
 
-	// CreateCKEClusterPluginTypeGpu captures enum value "gpu"
-	CreateCKEClusterPluginTypeGpu string = "gpu"
+	// CreateCKEClusterPluginTypeGpuDevice captures enum value "gpu_device"
+	CreateCKEClusterPluginTypeGpuDevice string = "gpu_device"
+
+	// CreateCKEClusterPluginTypeAuditLogs captures enum value "audit_logs"
+	CreateCKEClusterPluginTypeAuditLogs string = "audit_logs"
 )
 
 // prop value enum

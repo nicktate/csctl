@@ -411,7 +411,7 @@ definitions:
       type:
         title: Plugin type
         type: string
-        enum: [cluster_management, metrics, logs, cni, csi, cloud_controller_manager, autoscaler, gpu_device]
+        enum: [cluster_management, metrics, logs, cni, csi, cloud_controller_manager, autoscaler, gpu_device, audit_logs]
       configuration:
         description: Plugin configuration
         type: object
