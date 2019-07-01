@@ -18,12 +18,15 @@ type UserInterface interface {
 	Get(id string) (*types.User, error)
 	Delete(id string) error
 	List() ([]types.User, error)
+
+	WithSSHAccess(clusterID string) UserInterface
 }
 
 // users implements UserInterface
 type users struct {
 	client         rest.Interface
 	organizationID string
+	sshClusterID   string
 }
 
 func newUsers(c *Client, organizationID string) *users {
@@ -52,9 +55,24 @@ func (c *users) Delete(id string) error {
 	return c.client.Delete(path)
 }
 
-// List lists all users
+// List lists all users. If the WithSSHAccess() function was called on this
+// interface with a non-empty cluster ID, then only the users with SSH access
+// to the given cluster will be listed.
 func (c *users) List() ([]types.User, error) {
-	path := fmt.Sprintf("/v3/organizations/%s/users", c.organizationID)
+	var path string
+	if c.sshClusterID != "" {
+		path = fmt.Sprintf("/v3/organizations/%s/clusters/%s/ssh-users", c.organizationID, c.sshClusterID)
+	} else {
+		path = fmt.Sprintf("/v3/organizations/%s/users", c.organizationID)
+	}
 	out := make([]types.User, 0)
 	return out, c.client.Get(path, &out)
+}
+
+// WithSSHAccess limits the users returned to only those that have SSH access
+// to the given cluster. This function should only be used by a client that
+// uses a cluster token.
+func (c *users) WithSSHAccess(clusterID string) UserInterface {
+	c.sshClusterID = clusterID
+	return c
 }
