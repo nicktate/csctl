@@ -154,7 +154,7 @@ func rootPreRunE(requireToken bool) func(cmd *cobra.Command, args []string) erro
 	return func(cmd *cobra.Command, args []string) error {
 		userToken = viper.GetString("token")
 		if requireToken && userToken == "" {
-			return errors.New("please specify a token in your config file")
+			return errors.New("Please specify a token set either in your config file or via the --token flag")
 		}
 
 		var err error

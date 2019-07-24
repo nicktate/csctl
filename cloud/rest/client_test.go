@@ -34,26 +34,23 @@ func TestNewClient(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, client)
 
-	// BaseURL is required
 	_, err = NewClient(Config{
 		BaseURL: "",
 		Token:   validJWT,
 	})
-	assert.NotNil(t, err)
+	assert.NotNil(t, err, "base url is required")
 
-	// Invalid BaseURL
 	_, err = NewClient(Config{
 		BaseURL: "invalid",
 		Token:   validJWT,
 	})
-	assert.NotNil(t, err)
+	assert.NotNil(t, err, "invalid base url")
 
-	// Token is required
 	_, err = NewClient(Config{
 		BaseURL: containershipURL,
 		Token:   "",
 	})
-	assert.Nil(t, err)
+	assert.Nil(t, err, "token is not required")
 }
 
 func TestGet(t *testing.T) {

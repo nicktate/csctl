@@ -10,6 +10,9 @@ const (
 	defaultBaseURL = "https://auth.containership.io"
 )
 
+// AuthMethodEmail is the method type for email authentication
+const AuthMethodEmail = "email"
+
 // Interface is the interface for Auth
 type Interface interface {
 	RESTClient() rest.Interface

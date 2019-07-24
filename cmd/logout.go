@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -10,7 +10,7 @@ import (
 // logoutCmd represents the logout command
 var logoutCmd = &cobra.Command{
 	Use:   "logout",
-	Short: "Logout of the CLI",
+	Short: "Log out of the CLI",
 
 	Args: cobra.NoArgs,
 
@@ -26,7 +26,7 @@ var logoutCmd = &cobra.Command{
 			return err
 		}
 
-		log.Print("Successfully logged out!")
+		fmt.Print("Successfully logged out!")
 
 		return nil
 	},
