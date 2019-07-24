@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/containership/csctl/cloud/provision/types"
@@ -37,10 +38,10 @@ func (p *NodePools) columns() []string {
 		"ID",
 		"OS",
 		"Mode",
+		"Count",
 		"Status",
 		"Kubernetes Version",
-		"Etcd Version",
-		"Docker Version",
+		"Autoscale",
 	}
 }
 
@@ -49,13 +50,6 @@ func (p *NodePools) Table(w io.Writer) error {
 	table := table.New(w, p.columns())
 
 	for _, np := range p.items {
-		var etcdVersion string
-		if np.EtcdVersion == nil || *np.EtcdVersion == "" {
-			etcdVersion = "N/A"
-		} else {
-			etcdVersion = *np.EtcdVersion
-		}
-
 		var status string
 		if np.Status == nil || np.Status.Type == nil ||
 			*np.Status.Type == "" {
@@ -69,10 +63,10 @@ func (p *NodePools) Table(w io.Writer) error {
 			string(np.ID),
 			*np.Os,
 			*np.KubernetesMode,
+			fmt.Sprintf("%d", *np.Count),
 			status,
 			*np.KubernetesVersion,
-			etcdVersion,
-			*np.DockerVersion,
+			fmt.Sprintf("%t", *np.Autoscaling.Enabled),
 		})
 	}
 

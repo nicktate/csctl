@@ -17,3 +17,9 @@ func int32ptr(i int32) *int32 {
 func float32ptr(f float32) *float32 {
 	return &f
 }
+
+// boolptr is intended to be used to provide a pointer to
+// an bool for easily building test resources
+func boolptr(b bool) *bool {
+	return &b
+}

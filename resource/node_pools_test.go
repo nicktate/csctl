@@ -19,18 +19,26 @@ var (
 			ID:                types.UUID("1234"),
 			Os:                strptr("ubuntu"),
 			KubernetesMode:    strptr("master"),
+			Count:             int32ptr(3),
 			KubernetesVersion: strptr("1.12.1"),
 			EtcdVersion:       &etcdVersion,
 			DockerVersion:     &dockerVersion,
+			Autoscaling: &types.NodePoolAutoscaling{
+				Enabled: boolptr(false),
+			},
 		},
 		{
 			Name:              strptr("test2"),
 			ID:                types.UUID("4321"),
 			Os:                strptr("ubuntu"),
 			KubernetesMode:    strptr("worker"),
+			Count:             int32ptr(2),
 			KubernetesVersion: strptr("1.11.1"),
 			EtcdVersion:       nil,
 			DockerVersion:     &dockerVersion,
+			Autoscaling: &types.NodePoolAutoscaling{
+				Enabled: boolptr(true),
+			},
 		},
 	}
 
@@ -40,9 +48,13 @@ var (
 			ID:                types.UUID("1234"),
 			Os:                strptr("centos"),
 			KubernetesMode:    strptr("master"),
+			Count:             int32ptr(1),
 			KubernetesVersion: strptr("1.12.1"),
 			EtcdVersion:       &etcdVersion,
 			DockerVersion:     &dockerVersion,
+			Autoscaling: &types.NodePoolAutoscaling{
+				Enabled: boolptr(false),
+			},
 		},
 	}
 )
