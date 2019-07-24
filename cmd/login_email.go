@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 
+	"github.com/containership/csctl/cloud/auth"
 	"github.com/containership/csctl/cloud/auth/types"
 )
 
@@ -38,7 +39,7 @@ func emailFlag(cmd *cobra.Command, persistent bool) {
 		flagset = cmd.Flags()
 	}
 
-	flagset.StringVarP(&email, "email", "e", "", "email to login with")
+	flagset.StringVarP(&email, "email", "e", "", "email to log in with")
 }
 
 func passwordFlag(cmd *cobra.Command, persistent bool) {
@@ -49,13 +50,13 @@ func passwordFlag(cmd *cobra.Command, persistent bool) {
 		flagset = cmd.Flags()
 	}
 
-	flagset.StringVarP(&password, "password", "p", "", "password to login with")
+	flagset.StringVarP(&password, "password", "p", "", "password to log in with")
 }
 
 // loginEmailCmd represents the loginEmail command
 var loginEmailCmd = &cobra.Command{
 	Use:   "email",
-	Short: "Login with an email and password",
+	Short: "Log in with an email and password",
 
 	Args: cobra.NoArgs,
 
@@ -68,7 +69,7 @@ var loginEmailCmd = &cobra.Command{
 			}
 
 			if email == "" {
-				return errors.New("You must specify a valid email to login")
+				return errors.New("You must specify a valid email to log in")
 			}
 		}
 
@@ -80,14 +81,14 @@ var loginEmailCmd = &cobra.Command{
 			}
 
 			if password == "" {
-				return errors.New("You must specify a valid password to login")
+				return errors.New("You must specify a valid password to log in")
 			}
 		}
 
 		var resp = &types.AccountToken{}
 		var err error
 
-		resp, err = clientset.Auth().Login("email").Post(&types.LoginRequest{
+		resp, err = clientset.Auth().Login(auth.AuthMethodEmail).Post(&types.LoginRequest{
 			Email:    email,
 			Password: password,
 		})
