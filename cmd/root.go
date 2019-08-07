@@ -82,12 +82,11 @@ func nodePoolScopedPreRunE(cmd *cobra.Command, _ []string) error {
 }
 
 func clientsetRequiredPreRunE(cmd *cobra.Command, _ []string) error {
-	if userToken != "" {
-		// Command line flag was set and it takes precedence
-		return nil
+	// Only pull token from config if was not set by --token flag
+	if userToken == "" {
+		userToken = viper.GetString("token")
 	}
 
-	userToken = viper.GetString("token")
 	if userToken == "" {
 		return errors.New("please specify a token via --token or config file")
 	}
